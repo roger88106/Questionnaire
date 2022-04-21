@@ -13,5 +13,10 @@ namespace Questionnaire.BackPages
         {
 
         }
+
+        protected void Button2_Add_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/BackPage/BackQuestionnaire");
+        }
     }
 }

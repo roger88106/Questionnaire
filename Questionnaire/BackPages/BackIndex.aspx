@@ -21,6 +21,8 @@
         </table>
     </div>
     <div>
+        <asp:Button ID="Button_Delete" runat="server" Text="刪除" />
+        <asp:Button ID="Button2_Add" runat="server" Text="新增" OnClick="Button2_Add_Click" />
         <table border="1">
             <tr>
                 <td>  </td>
