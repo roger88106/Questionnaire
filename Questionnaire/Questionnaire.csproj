@@ -67,12 +67,100 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BackPages\BackIndex.aspx" />
+    <Content Include="BackPages\BackQuestion.aspx" />
+    <Content Include="BackPages\BackQuestionnaire.aspx" />
+    <Content Include="BackPages\BackResults.aspx" />
+    <Content Include="BackPages\BackStatisticalData.aspx" />
+    <Content Include="FrontPages\FrontIndex.aspx" />
+    <Content Include="FrontPages\Questionnaire.aspx" />
+    <Content Include="FrontPages\QuestionnaireCheck.aspx" />
+    <Content Include="FrontPages\QuestionnaireGraph.aspx" />
+    <Content Include="Models\Index.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackPages\BackIndex.aspx.cs">
+      <DependentUpon>BackIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackPages\BackIndex.aspx.designer.cs">
+      <DependentUpon>BackIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BackPages\BackPageMaster.Master.cs">
+      <DependentUpon>BackPageMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackPages\BackPageMaster.Master.designer.cs">
+      <DependentUpon>BackPageMaster.Master</DependentUpon>
+    </Compile>
+    <Compile Include="BackPages\BackQuestion.aspx.cs">
+      <DependentUpon>BackQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackPages\BackQuestion.aspx.designer.cs">
+      <DependentUpon>BackQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BackPages\BackQuestionnaire.aspx.cs">
+      <DependentUpon>BackQuestionnaire.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackPages\BackQuestionnaire.aspx.designer.cs">
+      <DependentUpon>BackQuestionnaire.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BackPages\BackResults.aspx.cs">
+      <DependentUpon>BackResults.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackPages\BackResults.aspx.designer.cs">
+      <DependentUpon>BackResults.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BackPages\BackStatisticalData.aspx.cs">
+      <DependentUpon>BackStatisticalData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackPages\BackStatisticalData.aspx.designer.cs">
+      <DependentUpon>BackStatisticalData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FrontPages\FrontIndex.aspx.cs">
+      <DependentUpon>FrontIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FrontPages\FrontIndex.aspx.designer.cs">
+      <DependentUpon>FrontIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FrontPages\Questionnaire.aspx.cs">
+      <DependentUpon>Questionnaire.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FrontPages\Questionnaire.aspx.designer.cs">
+      <DependentUpon>Questionnaire.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FrontPages\QuestionnaireCheck.aspx.cs">
+      <DependentUpon>QuestionnaireCheck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FrontPages\QuestionnaireCheck.aspx.designer.cs">
+      <DependentUpon>QuestionnaireCheck.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FrontPages\QuestionnaireGraph.aspx.cs">
+      <DependentUpon>QuestionnaireGraph.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FrontPages\QuestionnaireGraph.aspx.designer.cs">
+      <DependentUpon>QuestionnaireGraph.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Models\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BackPages\BackPageMaster.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -80,6 +168,10 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="Managers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
