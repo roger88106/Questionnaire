@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Questionnaire.Managers;
+using Questionnaire.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,8 +11,12 @@ namespace Questionnaire.BackPages
 {
     public partial class BackIndex : System.Web.UI.Page
     {
+        private QuestionnairesManager _mgr = new QuestionnairesManager();
+        List<QuestionnairesModel> questionnairesList;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            questionnairesList = _mgr.GetQuestionnaires();
 
         }
 
