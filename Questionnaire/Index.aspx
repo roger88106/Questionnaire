@@ -10,6 +10,8 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <asp:Button ID="front" runat="server" Text="前台" OnClick="front_Click"/>
+            <asp:Button ID="back" runat="server" Text="後台" OnClick="back_Click" />
         </div>
     </form>
 </body>

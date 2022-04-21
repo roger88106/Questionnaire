@@ -71,12 +71,13 @@
     <Content Include="BackPages\BackQuestion.aspx" />
     <Content Include="BackPages\BackQuestionnaire.aspx" />
     <Content Include="BackPages\BackResults.aspx" />
+    <Content Include="BackPages\BackResultsDetail.aspx" />
     <Content Include="BackPages\BackStatisticalData.aspx" />
     <Content Include="FrontPages\FrontIndex.aspx" />
     <Content Include="FrontPages\Questionnaire.aspx" />
     <Content Include="FrontPages\QuestionnaireCheck.aspx" />
     <Content Include="FrontPages\QuestionnaireGraph.aspx" />
-    <Content Include="Models\Index.aspx" />
+    <Content Include="Index.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +116,13 @@
     <Compile Include="BackPages\BackResults.aspx.designer.cs">
       <DependentUpon>BackResults.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BackPages\BackResultsDetail.aspx.cs">
+      <DependentUpon>BackResultsDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackPages\BackResultsDetail.aspx.designer.cs">
+      <DependentUpon>BackResultsDetail.aspx</DependentUpon>
+    </Compile>
     <Compile Include="BackPages\BackStatisticalData.aspx.cs">
       <DependentUpon>BackStatisticalData.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -150,11 +158,11 @@
     <Compile Include="FrontPages\QuestionnaireGraph.aspx.designer.cs">
       <DependentUpon>QuestionnaireGraph.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Index.aspx.cs">
+    <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Models\Index.aspx.designer.cs">
+    <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -172,6 +180,7 @@
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Managers\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

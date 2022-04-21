@@ -7,20 +7,29 @@
 // </自動產生的>
 //------------------------------------------------------------------------------
 
-namespace Questionnaire.FrontPages
+namespace Questionnaire.BackPages
 {
 
 
-    public partial class QuestionnaireGraph
+    public partial class BackResultsDetail
     {
 
         /// <summary>
-        /// form1 控制項。
+        /// Label_Date 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Label Label_Date;
+
+        /// <summary>
+        /// Literal_Main 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal_Main;
     }
 }

@@ -13,5 +13,15 @@ namespace Questionnaire.Models
         {
 
         }
+
+        protected void front_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(@"~\FrontPages\FrontIndex.aspx");
+        }
+
+        protected void back_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(@"~\BackPages\BackIndex.aspx");
+        }
     }
 }

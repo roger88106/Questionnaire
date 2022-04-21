@@ -4,7 +4,7 @@
 
 <html>
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -12,8 +12,25 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+
+            <table>
+                <tr>
+                    <td COLSPAN="2">
+                        <h1>動態問卷系統 - 後台管理頁面</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <a href="/BackPages/BackIndex.aspx">問卷管理</a><br />
+                        <a href="#">常用問題管理</a><br />
+                        <a href="/BackPages/BackQuestionnaire.aspx">測試用~問卷頁面</a>
+                    </td>
+                    <td>
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+                    </td>
+                </tr>
+            </table>
+
         </div>
     </form>
 </body>
