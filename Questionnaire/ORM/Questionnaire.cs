@@ -10,7 +10,7 @@ namespace Questionnaire.ORM
     {
         [Key]
         [Column(Order = 0)]
-        public Guid QuestionnaireID { get; set; }
+        public int QuestionnaireID { get; set; }
 
         [Key]
         [Column(Order = 1)]

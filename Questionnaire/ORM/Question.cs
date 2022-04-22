@@ -14,7 +14,7 @@ namespace Questionnaire.ORM
 
         [Key]
         [Column(Order = 1)]
-        public Guid QuestionnairesID { get; set; }
+        public int QuestionnairesID { get; set; }
 
         [Key]
         [Column(Order = 2)]

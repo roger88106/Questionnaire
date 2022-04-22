@@ -8,14 +8,14 @@
         <table border="1">
             <tr>
                 <td>問卷標題 
-                    <asp:TextBox ID="TextBox_Titel" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TextBox_Search" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td>開始/結束 
-                    <asp:TextBox ID="StartEnd" runat="server"></asp:TextBox>
-                    <asp:TextBox ID="TextBox_End" runat="server"></asp:TextBox>
-                    <asp:Button ID="TextBox_Search" runat="server" Text="搜尋" />
+                    <asp:TextBox ID="TextBox_Start" runat="server" TextMode="Date"></asp:TextBox>
+                    <asp:TextBox ID="TextBox_End" runat="server" TextMode="Date"></asp:TextBox>
+                    <asp:Button ID="Button_Search" runat="server" Text="搜尋" OnClick="Button_Search_Click" />
                 </td>
             </tr>
         </table>
@@ -25,6 +25,7 @@
         <asp:Button ID="Button2_Add" runat="server" Text="新增" OnClick="Button2_Add_Click" />
         <table border="1">
             <tr>
+                
                 <td>  </td>
                 <td>#</td>
                 <td>問卷</td>
@@ -33,7 +34,7 @@
                 <td>結束時間</td>
                 <td>觀看統計</td>
             </tr>
-            <asp:Literal ID="Literal_" runat="server" />
+            <asp:Literal ID="Literal_Table" runat="server" />
         </table>
     </div>
 </asp:Content>

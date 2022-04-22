@@ -7,7 +7,7 @@ namespace Questionnaire.Models
 {
     public class QuestionnairesModel
     {
-        public Guid QuestionnaireID;
+        public int QuestionnaireID;
         public DateTime StartTime;//起始時間
         public DateTime EndTime;//結束時間
         public string QuestionnaireTital;//問卷標題

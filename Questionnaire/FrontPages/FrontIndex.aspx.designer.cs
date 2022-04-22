@@ -24,22 +24,22 @@ namespace Questionnaire.FrontPages
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// TextBox_Titel 控制項。
+        /// TextBox_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox_Titel;
+        protected global::System.Web.UI.WebControls.TextBox TextBox_Search;
 
         /// <summary>
-        /// StartEnd 控制項。
+        /// TextBox_Start 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StartEnd;
+        protected global::System.Web.UI.WebControls.TextBox TextBox_Start;
 
         /// <summary>
         /// TextBox_End 控制項。
@@ -51,21 +51,21 @@ namespace Questionnaire.FrontPages
         protected global::System.Web.UI.WebControls.TextBox TextBox_End;
 
         /// <summary>
-        /// TextBox_Search 控制項。
+        /// Button_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button TextBox_Search;
+        protected global::System.Web.UI.WebControls.Button Button_Search;
 
         /// <summary>
-        /// Literal_ 控制項。
+        /// Literal_Table 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal_;
+        protected global::System.Web.UI.WebControls.Literal Literal_Table;
     }
 }

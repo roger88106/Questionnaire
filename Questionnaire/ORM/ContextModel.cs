@@ -8,10 +8,11 @@ namespace Questionnaire.ORM
     public partial class ContextModel : DbContext
     {
         public ContextModel()
-            : base("name=ContextModel")
+            : base("name=ContextModel1")
         {
         }
 
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Questionnaire> Questionnaires { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Respondent> Respondents { get; set; }

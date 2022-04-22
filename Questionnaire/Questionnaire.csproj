@@ -166,6 +166,7 @@
     <Compile Include="FrontPages\QuestionnaireGraph.aspx.designer.cs">
       <DependentUpon>QuestionnaireGraph.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SearchHelper.cs" />
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -180,6 +181,7 @@
     <Compile Include="ORM\Question.cs" />
     <Compile Include="ORM\Questionnaire.cs" />
     <Compile Include="ORM\Respondent.cs" />
+    <Compile Include="ORM\sysdiagram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +194,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
