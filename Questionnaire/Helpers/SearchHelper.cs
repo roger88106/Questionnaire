@@ -32,12 +32,14 @@ namespace Questionnaire.Helpers
             else
                 end = Convert.ToDateTime(endTime);
 
+            if (keyword == null)
+                keyword = "";
 
             foreach (var item in list)
             {
-                //如果包含關鍵字且時間在範圍內，就儲存    關鍵字如果為空值，就忽略關鍵字搜尋，僅搜尋時間
-                if ((item.QuestionnaireTital.IndexOf(keyword) > 0 || string.IsNullOrEmpty(keyword)) 
-                    && item.StartTime > start && item.EndTime <= end)
+                //如果包含關鍵字且時間在範圍內，就儲存 關鍵字如果為空值，就忽略關鍵字搜尋，僅搜尋時間
+                if ((item.QuestionnaireTital.Contains(keyword) || string.IsNullOrEmpty(keyword))
+                    && item.StartTime >= start && item.EndTime <= end)
                 {
                     resultList.Add(item);
                 }
@@ -45,5 +47,7 @@ namespace Questionnaire.Helpers
 
             return resultList;
         }
+
+
     }
 }

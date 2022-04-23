@@ -8,17 +8,22 @@ namespace Questionnaire.ORM
     public partial class ContextModel : DbContext
     {
         public ContextModel()
-            : base("name=ContextModel1")
+            : base("name=ContextModel")
         {
         }
 
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Answer> Answers { get; set; }
         public virtual DbSet<Questionnaire> Questionnaires { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Respondent> Respondents { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Answer>()
+                .Property(e => e.Answer1)
+                .IsUnicode(false);
+
             modelBuilder.Entity<Questionnaire>()
                 .Property(e => e.QuestionnaireTital)
                 .IsUnicode(false);

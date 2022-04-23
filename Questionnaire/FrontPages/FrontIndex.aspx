@@ -16,13 +16,13 @@
             <div>
                 <table border="1">
                     <tr>
-                        <td>
-                            問卷標題  <asp:TextBox ID="TextBox_Search" runat="server"></asp:TextBox>
+                        <td>問卷標題 
+                            <asp:TextBox ID="TextBox_Search" runat="server"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            開始/結束  <asp:TextBox ID="TextBox_Start" runat="server" TextMode="Date"></asp:TextBox>
+                        <td>開始/結束 
+                            <asp:TextBox ID="TextBox_Start" runat="server" TextMode="Date"></asp:TextBox>
                             <asp:TextBox ID="TextBox_End" runat="server" TextMode="Date"></asp:TextBox>
                             <asp:Button ID="Button_Search" runat="server" Text="搜尋" OnClick="Button_Search_Click" />
                         </td>
@@ -41,6 +41,8 @@
                     </tr>
                     <asp:Literal ID="Literal_Table" runat="server" />
                 </table>
+                <asp:Literal ID="Literal_Pager" runat="server" />
+
             </div>
         </div>
     </form>

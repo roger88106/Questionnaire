@@ -3,7 +3,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     <div>
         <table border="1">
             <tr>
@@ -21,12 +20,12 @@
         </table>
     </div>
     <div>
-        <asp:Button ID="Button_Delete" runat="server" Text="刪除" />
+        <asp:Button ID="Button_Delete" runat="server" Text="刪除" OnClick="Button_Delete_Click" />
         <asp:Button ID="Button2_Add" runat="server" Text="新增" OnClick="Button2_Add_Click" />
+        <asp:Panel ID="Panel1" runat="server"></asp:Panel>
         <table border="1">
             <tr>
-                
-                <td>  </td>
+                <td></td>
                 <td>#</td>
                 <td>問卷</td>
                 <td>狀態</td>
@@ -36,5 +35,8 @@
             </tr>
             <asp:Literal ID="Literal_Table" runat="server" />
         </table>
+        <asp:Literal ID="Literal_Pager" runat="server" />
+
+        <asp:HiddenField ID="HiddenField_keyword" runat="server" />
     </div>
 </asp:Content>

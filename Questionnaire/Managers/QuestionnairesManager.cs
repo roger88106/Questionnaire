@@ -10,13 +10,19 @@ namespace Questionnaire.Managers
     public class QuestionnairesManager
     {
 
-        public List<QuestionnairesModel> GetQuestionnaires()
+
+        /// <summary>
+        /// 查詢問卷狀況
+        /// </summary>
+        /// <param name="stat">狀態，-1為查詢全部，0為查詢除了刪除外的，1只查詢已啟用的</param>
+        /// <returns></returns>
+        public List<QuestionnairesModel> GetQuestionnaires(int stat)
         {
             using (ContextModel contextModel = new ContextModel())
             {
                 var query =
                     from item in contextModel.Questionnaires
-                    where item.QuestionnaireState >= 0 //小於零代表已經刪除
+                    where item.QuestionnaireState >= stat
                     select new QuestionnairesModel
                     {
                         QuestionnaireID = item.QuestionnaireID,
@@ -39,6 +45,18 @@ namespace Questionnaire.Managers
 
             }
 
+        }
+
+
+
+        public void DeleteQuestionnaires(int ID)
+        {
+            using (ContextModel contextModel = new ContextModel())
+            {
+                var item = contextModel.Questionnaires.First(c => c.QuestionnaireID == ID);
+                item.QuestionnaireState = -1;//軟刪除
+                contextModel.SaveChanges();
+            }
         }
     }
 }

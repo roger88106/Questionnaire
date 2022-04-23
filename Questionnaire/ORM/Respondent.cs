@@ -8,36 +8,24 @@ namespace Questionnaire.ORM
 
     public partial class Respondent
     {
-        [Key]
-        [Column(Order = 0)]
         public Guid RespondentID { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
         public int QuestionnairesID { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
+        [Required]
         [StringLength(10)]
         public string Name { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
+        [Required]
         [StringLength(10)]
         public string PhoneNumber { get; set; }
 
-        [Key]
-        [Column(Order = 4)]
+        [Required]
         [StringLength(50)]
         public string Email { get; set; }
 
-        [Key]
-        [Column(Order = 5)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Age { get; set; }
 
-        [Key]
-        [Column(Order = 6)]
         public DateTime FillTime { get; set; }
     }
 }

@@ -8,31 +8,20 @@ namespace Questionnaire.ORM
 
     public partial class Questionnaire
     {
-        [Key]
-        [Column(Order = 0)]
         public int QuestionnaireID { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
         public DateTime StartTime { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
         public DateTime EndTime { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
+        [Required]
         [StringLength(50)]
         public string QuestionnaireTital { get; set; }
 
-        [Key]
-        [Column(Order = 4)]
+        [Required]
         [StringLength(1000)]
         public string QuestionnaireContent { get; set; }
 
-        [Key]
-        [Column(Order = 5)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int QuestionnaireState { get; set; }
     }
 }

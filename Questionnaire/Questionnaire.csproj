@@ -166,6 +166,7 @@
     <Compile Include="FrontPages\QuestionnaireGraph.aspx.designer.cs">
       <DependentUpon>QuestionnaireGraph.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PaginationHelper.cs" />
     <Compile Include="Helpers\SearchHelper.cs" />
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
@@ -177,6 +178,7 @@
     <Compile Include="Managers\QuestionnairesManager.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\QuestionnairesModel.cs" />
+    <Compile Include="ORM\Answer.cs" />
     <Compile Include="ORM\ContextModel.cs" />
     <Compile Include="ORM\Question.cs" />
     <Compile Include="ORM\Questionnaire.cs" />
