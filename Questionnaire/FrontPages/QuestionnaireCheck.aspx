@@ -10,28 +10,56 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <table width="99%">
+                <tr>
+                    <td>
+                        <h1>動態問卷填答系統</h1>
+                    </td>
+                    <td align="left">
+                        <asp:Label ID="Label_State" runat="server" Text=""></asp:Label><br />
+                        <asp:Label ID="Label_Date" runat="server" Text=""></asp:Label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
             <table>
                 <tr>
+                    <td colspan="2">
+                        <h3>
+                            <asp:Label ID="Label_Title" runat="server" Text="問卷標題"></asp:Label>
+                        </h3>
+                    </td>
+                </tr>
+                <tr>
                     <td>姓名</td>
-                    <td><asp:Label ID="Label_Name" runat="server" Text="Label" /></td>
+                    <td>
+                        <asp:Label ID="Label_Name" runat="server" Text="Label" /></td>
                 </tr>
                 <tr>
                     <td>電話號碼</td>
-                    <td><asp:Label ID="Label_Phone" runat="server" Text="Label" /></td>
+                    <td>
+                        <asp:Label ID="Label_Phone" runat="server" Text="Label" /></td>
                 </tr>
                 <tr>
                     <td>Email</td>
-                    <td><asp:Label ID="Label_Email" runat="server" Text="Label" /></td>
+                    <td>
+                        <asp:Label ID="Label_Email" runat="server" Text="Label" /></td>
                 </tr>
                 <tr>
                     <td>年齡</td>
-                    <td><asp:Label ID="Label_Age" runat="server" Text="Label" /></td>
+                    <td>
+                        <asp:Label ID="Label_Age" runat="server" Text="Label" /></td>
                 </tr>
             </table>
         </div>
 
         <div>
             <asp:Literal ID="Literal_Question" runat="server"></asp:Literal>
+        </div>
+        <div>
+            <input type="button" onclick="javascript:window.history.go(-1);"value="取消" />
+            <asp:Button ID="Button_OK" runat="server" Text="確認" OnClick="Button_OK_Click"/>
         </div>
     </form>
 </body>

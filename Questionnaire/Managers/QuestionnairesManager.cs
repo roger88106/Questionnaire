@@ -18,31 +18,29 @@ namespace Questionnaire.Managers
         /// <returns></returns>
         public List<QuestionnairesModel> GetQuestionnaires(int stat)
         {
-            using (ContextModel contextModel = new ContextModel())
+            try
             {
-                var query =
-                    from item in contextModel.Questionnaires
-                    where item.QuestionnaireState >= stat
-                    select new QuestionnairesModel
-                    {
-                        QuestionnaireID = item.QuestionnaireID,
-                        StartTime = item.StartTime,
-                        EndTime = item.EndTime,
-                        QuestionnaireTital = item.QuestionnaireTital,
-                        QuestionnaireContent = item.QuestionnaireContent,
-                        QuestionnaireState = item.QuestionnaireState
-                    };
-
-                List<QuestionnairesModel> list = query.ToList();
-                try
+                
+                using (ContextModel contextModel = new ContextModel())
                 {
-                    return list;
+                    var query =
+                        from item in contextModel.Questionnaires
+                        where item.QuestionnaireState >= stat
+                        select new QuestionnairesModel
+                        {
+                            QuestionnaireID = item.QuestionnaireID,
+                            StartTime = item.StartTime,
+                            EndTime = item.EndTime,
+                            QuestionnaireTital = item.QuestionnaireTital,
+                            QuestionnaireContent = item.QuestionnaireContent,
+                            QuestionnaireState = item.QuestionnaireState
+                        };
+                    return query.ToList();
                 }
-                catch
-                {
-                    return null;
-                }
-
+            }
+            catch
+            {
+                return null;
             }
 
         }
