@@ -64,7 +64,7 @@ namespace Questionnaire.FrontPages
 
                         Literal_Table.Text += $"<tr>" +
                             $"<td>{item.QuestionnaireID}</td>" +
-                            $"<td><a href=\"Questionnaire.aspx\">{item.QuestionnaireTital}</a></td>" +
+                            $"<td><a href=\"Questionnaire.aspx?ID={item.QuestionnaireID}\">{item.QuestionnaireTital}</a></td>" +
                             $"<td>{state}</td>" +
                             $"<td>{item.StartTime.ToString("yyyy/MM/dd")}</td>" +
                             $"<td>{item.EndTime.ToString("yyyy/MM/dd")}</td>" +

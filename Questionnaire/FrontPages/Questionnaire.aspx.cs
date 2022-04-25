@@ -16,9 +16,8 @@ namespace Questionnaire.FrontPages
         QuestionManager _mgr = new QuestionManager();
         protected void Page_Load(object sender, EventArgs e)
         {
-            //questionnairesID = Convert.ToInt32(Request.QueryString["ID"]);
+            questionnairesID = Convert.ToInt32(Request.QueryString["ID"]);
 
-            questionnairesID = 1;//測試用
             questionList = _mgr.GetQuestion(questionnairesID);
 
             questionCount = questionList.Count;
@@ -27,7 +26,11 @@ namespace Questionnaire.FrontPages
 
             foreach (var item in questionList)
             {
-                questionsHtml += $"<p>{_i}. {item.QuestionContent.Trim()}</p>"; //題目的HTML
+                string requiredString = "";
+                if (item.Required)
+                    requiredString = "(必填)";
+
+                questionsHtml += $"<p>{_i}. {item.QuestionContent.Trim()}{requiredString}</p>"; //題目的HTML
 
                 if (item.QuestionType == 1 || item.QuestionType == 2) //單、複選
                 {
@@ -60,11 +63,8 @@ namespace Questionnaire.FrontPages
 
         protected void Button_OK_Click(object sender, EventArgs e)
         {
-            //填答人基本資料格式確認
-
-            //要保存的資料
+            //填答人個資
             Guid RespondentID = Guid.NewGuid();
-
             RespondentModel respondent = new RespondentModel
             {
                 RespondentID = RespondentID,
@@ -75,37 +75,46 @@ namespace Questionnaire.FrontPages
                 Age = Convert.ToInt32(TextBox_Age.Text),
                 FillTime = DateTime.Now
             };
-            HttpContext.Current.Session["Questions_Respondent"] = respondent;
 
-            //HttpContext.Current.Session["Questions_RespondentID"] = Guid.NewGuid();
-            //HttpContext.Current.Session["Questions_QuestionnairesID"] = questionnairesID;
-            //HttpContext.Current.Session["Questions_Name"] = TextBox_Name.Text;
-            //HttpContext.Current.Session["Questions_PhoneNumber"] = TextBox_Phone.Text;
-            //HttpContext.Current.Session["Questions_Email"] = TextBox_Email.Text;
-            //HttpContext.Current.Session["Questions_Age"] = Convert.ToInt32(TextBox_Age.Text);
-            //HttpContext.Current.Session["Questions_FillTime"] = DateTime.Now;
-
+            //判斷問卷填寫狀況，並做成方便儲存的資料結構
+            bool required = true;//必填是否都有完成
             List<AnswerModel> answerList = new List<AnswerModel>();
-
-            //List<Guid> Questions_AnswerID = new List<Guid>();
-            //List<Guid> Questions_QuestionID = new List<Guid>();
-            //List<string> Questions_Answer = new List<string>();
-
             for (int i = 0; i < questionCount; i++)
             {
                 string _answer = "";
                 var item = questionList[i];
-                if (item.QuestionType == 1 || item.QuestionType == 2) //單、複選的情形
+                var value = Request.Form.GetValues($"Questions_{i}");
+
+                if (value == null)
                 {
-                    string[] _answerArray = Request.Form.GetValues($"Questions_{i}");
-                    foreach (var _answerItem in _answerArray)
-                    {
-                        _answer += _answerItem + ",";
-                    }
-                    _answer = _answer.TrimEnd(',');
+                    if (item.Required)//如果這題是必填
+                        required = false;//有必填為空
+                    else
+                        _answer = "";//不是必填且沒填，給他空字串
                 }
-                else//文字方塊的情形
-                    _answer = Request.Form[$"Questions_{i}"].Trim();
+                //需要先判斷過是否為Null才能判斷是否為空字串，不然 value[0] 的地方會Error
+                else if (string.IsNullOrEmpty(value[0].Trim()))
+                {
+                    if (item.Required)
+                        required = false;
+                    else
+                        _answer = "";
+                }
+                else
+                {
+                    if (item.QuestionType == 1 || item.QuestionType == 2) //單、複選的情形
+                    {
+
+                        string[] _answerArray = Request.Form.GetValues($"Questions_{i}");
+                        foreach (var _answerItem in _answerArray)
+                        {
+                            _answer += _answerItem + ",";
+                        }
+                        _answer = _answer.TrimEnd(',');
+                    }
+                    else//文字方塊的情形
+                        _answer = Request.Form[$"Questions_{i}"].Trim();
+                }
 
                 answerList.Add(new AnswerModel
                 {
@@ -115,21 +124,30 @@ namespace Questionnaire.FrontPages
                     RespondentID = RespondentID,
                     Answer = _answer
                 });
-                //Questions_AnswerID.Add(Guid.NewGuid());
-                //Questions_QuestionID.Add(item.QuestionID);
-                //Questions_Answer.Add(_answer);
             }
-            HttpContext.Current.Session["Questions_AnswerList"] = answerList;
-            //HttpContext.Current.Session["Questions_AnswerID"] = Questions_AnswerID;
-            //HttpContext.Current.Session["Questions_QuestionID"] = Questions_QuestionID;
-            //HttpContext.Current.Session["Questions_Answer"] = Questions_Answer;
 
-            Response.Redirect($"QuestionnaireCheck.aspx?ID={questionnairesID}");
+            //判斷輸入的是否完整
+            if (string.IsNullOrEmpty(TextBox_Name.Text) || string.IsNullOrEmpty(TextBox_Phone.Text) ||
+                string.IsNullOrEmpty(TextBox_Email.Text) || string.IsNullOrEmpty(TextBox_Age.Text))
+                Label1.Text = "個人資料請確實填寫";
+            else if(TextBox_Phone.Text.Count()!= 10)
+            {
+                Label1.Text = "手機號碼格式錯誤";
+            }
+            else if (!required)
+                Label1.Text = "尚有必填題目為填寫";
+            else
+            {
+                //確定沒問題，儲存進Session並跳轉到確認頁
+                HttpContext.Current.Session["Questions_Respondent"] = respondent;
+                HttpContext.Current.Session["Questions_AnswerList"] = answerList;
+                Response.Redirect($"QuestionnaireCheck.aspx?ID={questionnairesID}");
+            }
         }
 
         protected void Button_Cancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("FrontIndex");
+            Response.Redirect("FrontIndex.aspx");
         }
     }
 }
