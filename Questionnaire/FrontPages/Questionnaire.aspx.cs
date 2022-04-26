@@ -14,49 +14,72 @@ namespace Questionnaire.FrontPages
         int questionnairesID, questionCount;
         List<QuestionModel> questionList;
         QuestionManager _mgr = new QuestionManager();
+        QuestionnairesManager _questionnairesManager = new QuestionnairesManager();
         protected void Page_Load(object sender, EventArgs e)
         {
-            questionnairesID = Convert.ToInt32(Request.QueryString["ID"]);
-
-            questionList = _mgr.GetQuestion(questionnairesID);
-
-            questionCount = questionList.Count;
-            int _i = 0;//迴圈數
-            string questionsHtml = "";
-
-            foreach (var item in questionList)
+            Button_OK.Enabled = true;
+            Label1.Text = "";
+            try//排除掉ID被竄改成不是整數的情形
             {
-                string requiredString = "";
-                if (item.Required)
-                    requiredString = "(必填)";
-
-                questionsHtml += $"<p>{_i}. {item.QuestionContent.Trim()}{requiredString}</p>"; //題目的HTML
-
-                if (item.QuestionType == 1 || item.QuestionType == 2) //單、複選
-                {
-                    string _type = "";
-                    string[] Options = item.QuestionOptions.Split(';');
-
-                    if (item.QuestionType == 1)
-                        _type = "radio";
-                    else
-                        _type = "checkbox";
-
-                    int _i2 = 0;//value用
-                    foreach (string OptionString in Options)
-                    {
-                        questionsHtml += $"<input type=\"{_type}\" name=Questions_{_i} value = \"{_i2}\">{OptionString} <br />";
-                        _i2++;
-                    }
-                }
-                else //文字
-                {
-                    questionsHtml += $"<input type=\"text\" name=Questions_{_i}>";
-                }
-                _i++;
+                questionnairesID = Convert.ToInt32(Request.QueryString["ID"]);
             }
-            Literal_Questions.Text = "";//保險起見，先清空還原
-            Literal_Questions.Text = questionsHtml;
+            catch (Exception)
+            {
+                questionnairesID = -1;
+            }
+
+            //判斷此ID是否有對應的可填寫問卷
+            bool hasThisQuestionnairesID = _questionnairesManager.QuestionnaireIDinDatabase(1, questionnairesID);
+
+            if (questionnairesID >= 0 && hasThisQuestionnairesID)
+            {
+                questionList = _mgr.GetQuestion(questionnairesID);
+                questionCount = questionList.Count;
+
+                int _i = 0;//迴圈數
+                string questionsHtml = "";
+
+                foreach (var item in questionList)
+                {
+                    string requiredString = "";
+                    if (item.Required)
+                        requiredString = "(必填)";
+
+                    questionsHtml += $"<p>{_i}. {item.QuestionContent.Trim()}{requiredString}</p>"; //題目的HTML
+
+                    if (item.QuestionType == 1 || item.QuestionType == 2) //單、複選
+                    {
+                        string _type = "";
+                        string[] Options = item.QuestionOptions.Split(';');
+
+                        if (item.QuestionType == 1)
+                            _type = "radio";
+                        else
+                            _type = "checkbox";
+
+                        int _i2 = 0;//value用
+                        foreach (string OptionString in Options)
+                        {
+                            questionsHtml += $"<input type=\"{_type}\" name=Questions_{_i} value = \"{_i2}\">{OptionString} <br />";
+                            _i2++;
+                        }
+                    }
+                    else //文字
+                    {
+                        questionsHtml += $"<input type=\"text\" name=Questions_{_i}>";
+                    }
+                    _i++;
+                }
+                Literal_Questions.Text = "";//保險起見，先清空還原
+                Literal_Questions.Text = questionsHtml;
+            }
+            else
+            {
+                Literal_Questions.Text = "";//保險起見，先清空還原
+                Literal_Questions.Text = "問卷讀取出錯";
+                Button_OK.Enabled = false;
+            }
+            
 
             //之後把按鈕改成動態生成的，如果問卷生成出錯，按鈕就不要出現
         }

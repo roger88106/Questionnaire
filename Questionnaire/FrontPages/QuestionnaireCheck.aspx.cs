@@ -119,7 +119,7 @@ namespace Questionnaire.FrontPages
             }
             catch
             {
-                Label1.Text = "資料儲存錯誤，請再確認一次您的資料"
+                Label1.Text = "資料儲存錯誤，請再確認一次您的資料";
             }
 
         }

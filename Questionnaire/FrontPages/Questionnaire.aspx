@@ -27,7 +27,7 @@
                 <tr>
                     <td>電話號碼</td>
                     <td>
-                        <asp:TextBox ID="TextBox_Phone" runat="server" TextMode="Number">123</asp:TextBox></td>
+                        <asp:TextBox ID="TextBox_Phone" runat="server" TextMode="Number">0912345678</asp:TextBox></td>
                 </tr>
                 <tr>
                     <td>Email</td>
