@@ -33,7 +33,7 @@
                         <tr>
                             <td>描述內容</td>
                             <td>
-                                <asp:TextBox ID="TextBox1" runat="server" TextMode="MultiLine" Rows="5" />
+                                <asp:TextBox ID="TextBox_Content" runat="server" TextMode="MultiLine" Rows="5" />
                             </td>
                         </tr>
                         <tr>
@@ -51,7 +51,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                <asp:CheckBox ID="CheckBox" runat="server" />
+                                <asp:CheckBox ID="CheckBox_State" runat="server" />
                                 已啟用
                             </td>
                         </tr>
@@ -60,16 +60,16 @@
                         <tr>
                             <td width="33%"></td>
                             <td width="33%">
-                                <asp:Button ID="Button1" runat="server" Text="取消" />
+                                <asp:Button ID="Button_Cancle" runat="server" Text="取消" />
                             </td>
                             <td width="33%">
-                                <asp:Button ID="Button2" runat="server" Text="送出" />
+                                <asp:Button ID="Button_OK" runat="server" Text="修改" OnClick="Button_OK_Click" />
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
         </table>
-
+        <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
     </div>
 </asp:Content>

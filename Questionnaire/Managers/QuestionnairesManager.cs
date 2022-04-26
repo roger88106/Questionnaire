@@ -16,7 +16,7 @@ namespace Questionnaire.Managers
         /// </summary>
         /// <param name="stat">狀態，-1為查詢全部，0為查詢除了刪除外的，1只查詢已啟用的</param>
         /// <returns></returns>
-        public List<QuestionnairesModel> GetQuestionnaires(int state)
+        public List<QuestionnairesModel> GetQuestionnaireList(int state)
         {
             try
             {
@@ -25,6 +25,7 @@ namespace Questionnaire.Managers
                     var query =
                         from item in contextModel.Questionnaires
                         where item.QuestionnaireState >= state
+                        orderby item.QuestionnaireID
                         select new QuestionnairesModel
                         {
                             QuestionnaireID = item.QuestionnaireID,
@@ -40,6 +41,58 @@ namespace Questionnaire.Managers
             catch
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// 查詢單筆問卷資料
+        /// </summary>
+        /// <param name="state">狀態，-1為查詢全部，0為查詢除了刪除外的，1只查詢已啟用的</param>
+        /// <param name="ID">想搜尋的ID</param>
+        /// <returns></returns>
+        public QuestionnairesModel GetQuestionnaire(int state,int ID)
+        {
+            try
+            {
+                using (ContextModel contextModel = new ContextModel())
+                {
+                    var query =
+                        from item in contextModel.Questionnaires
+                        where item.QuestionnaireState >= state && item.QuestionnaireID == ID
+                        select new QuestionnairesModel
+                        {
+                            QuestionnaireID = item.QuestionnaireID,
+                            StartTime = item.StartTime,
+                            EndTime = item.EndTime,
+                            QuestionnaireTital = item.QuestionnaireTital,
+                            QuestionnaireContent = item.QuestionnaireContent,
+                            QuestionnaireState = item.QuestionnaireState
+                        };
+                    return query.ToArray()[0];
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 修改問卷資料
+        /// </summary>
+        /// <param name="ID">問卷ID</param>
+        /// <param name="questionnaire">新的問卷資料</param>
+        public void UpdateQuestionnaire(int ID, QuestionnairesModel questionnaire)
+        {
+            using (ContextModel contextModel = new ContextModel())
+            {
+                var item = contextModel.Questionnaires.First(c => c.QuestionnaireID == ID);
+                item.QuestionnaireTital = questionnaire.QuestionnaireTital;
+                item.QuestionnaireContent = questionnaire.QuestionnaireContent;
+                item.StartTime = questionnaire.StartTime;
+                item.EndTime = questionnaire.EndTime;
+                item.QuestionnaireState = questionnaire.QuestionnaireState;
+                contextModel.SaveChanges();
             }
         }
 
@@ -70,8 +123,10 @@ namespace Questionnaire.Managers
 
         }
 
-
-
+        /// <summary>
+        /// 刪除問卷(軟刪除)
+        /// </summary>
+        /// <param name="ID">想刪除的問卷ID</param>
         public void DeleteQuestionnaires(int ID)
         {
             using (ContextModel contextModel = new ContextModel())

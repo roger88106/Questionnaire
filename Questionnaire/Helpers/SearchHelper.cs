@@ -35,11 +35,18 @@ namespace Questionnaire.Helpers
             if (keyword == null)
                 keyword = "";
 
+            DateTime questionnaireEnd;
+
             foreach (var item in list)
             {
+                if (item.EndTime == null)
+                    questionnaireEnd = DateTime.MinValue;
+                else
+                    questionnaireEnd = item.EndTime.Value;
+
                 //如果包含關鍵字且時間在範圍內，就儲存 關鍵字如果為空值，就忽略關鍵字搜尋，僅搜尋時間
                 if ((item.QuestionnaireTital.Contains(keyword) || string.IsNullOrEmpty(keyword))
-                    && item.StartTime >= start && item.EndTime <= end)
+                    && item.StartTime >= start && questionnaireEnd <= end)
                 {
                     resultList.Add(item);
                 }

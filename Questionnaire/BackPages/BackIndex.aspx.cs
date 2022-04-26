@@ -23,7 +23,7 @@ namespace Questionnaire.BackPages
         {
             Literal_Table.Text = "";//都先清空，防止狀態保留
 
-            allQuestionnairesList = _mgr.GetQuestionnaires(0);//產生保存用的List
+            allQuestionnairesList = _mgr.GetQuestionnaireList(0);//產生保存用的List
             ShowQuestionnairesList = allQuestionnairesList;
 
             GetTableData();
@@ -33,7 +33,7 @@ namespace Questionnaire.BackPages
 
         protected void Button2_Add_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/BackPage/BackQuestionnaire");
+            Response.Redirect("BackQuestionnaire.aspx?ID=-1");
         }
 
         protected void Button_Search_Click(object sender, EventArgs e)
@@ -66,7 +66,7 @@ namespace Questionnaire.BackPages
             }
 
             Literal_Table.Text = "";//清空防止狀態保留
-            allQuestionnairesList = _mgr.GetQuestionnaires(0);//更新總列表
+            allQuestionnairesList = _mgr.GetQuestionnaireList(0);//更新總列表
             GetTableData();
         }
 
@@ -83,13 +83,23 @@ namespace Questionnaire.BackPages
                     else
                         state = "已關閉";
 
+                    string endTime;
+                    if (item.EndTime.HasValue)
+                    {
+                        endTime = item.EndTime.Value.ToString("yyyy/MM/dd");
+                    }
+                    else
+                    {
+                        endTime = " - ";
+                    }
+
                     Literal_Table.Text += $"<tr>" +
                         $"<td><input type=\"checkbox\" name=\"checkBox\" value = \"{_i}\" /></td>" +
                         $"<td>{item.QuestionnaireID}</td>" +
-                        $"<td><a href=\"#\">{item.QuestionnaireTital}</a></td>" +
+                        $"<td><a href=\"BackQuestionnaire.aspx?ID={item.QuestionnaireID}\">{item.QuestionnaireTital}</a></td>" +
                         $"<td>{state}</td>" +
                         $"<td>{item.StartTime.ToString("yyyy/MM/dd")}</td>" +
-                        $"<td>{item.EndTime.ToString("yyyy/MM/dd")}</td>" +
+                        $"<td>{endTime}</td>" +
                         $"<td><a href=\"#\">前往</td>" +
                         $"</tr>";
 

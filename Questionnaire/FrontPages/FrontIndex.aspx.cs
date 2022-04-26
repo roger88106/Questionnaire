@@ -22,7 +22,7 @@ namespace Questionnaire.FrontPages
         {
             Literal_Table.Text = "";//都先清空，防止狀態保留
 
-            allQuestionnairesList = _mgr.GetQuestionnaires(1);//產生保存用的List
+            allQuestionnairesList = _mgr.GetQuestionnaireList(1);//產生保存用的List
             ShowQuestionnairesList = allQuestionnairesList;
 
             GetTableData();
@@ -54,20 +54,41 @@ namespace Questionnaire.FrontPages
                 {
                     if (item.QuestionnaireState > 0)
                     {
+                        DateTime end;
+                        if (item.EndTime.HasValue)
+                        {
+                            end = item.EndTime.Value;
+                        }
+                        else
+                        {
+                            end = DateTime.MaxValue.AddDays(-1);
+                        }
+
+
                         if (item.StartTime > DateTime.Now)
                             state = "尚未開放";
-                        else if (item.EndTime.AddDays(1) < DateTime.Now)//到隔天的0點0分才結束
+                        else if (end.AddDays(1) < DateTime.Now)//到隔天的0點0分才結束
                             state = "已結束";
                         else
                             state = "投票中";
 
+
+                        string endTime;
+                        if (item.EndTime.HasValue)
+                        {
+                            endTime = item.EndTime.Value.ToString("yyyy/MM/dd");
+                        }
+                        else
+                        {
+                            endTime = " - ";
+                        }
 
                         Literal_Table.Text += $"<tr>" +
                             $"<td>{item.QuestionnaireID}</td>" +
                             $"<td><a href=\"Questionnaire.aspx?ID={item.QuestionnaireID}\">{item.QuestionnaireTital}</a></td>" +
                             $"<td>{state}</td>" +
                             $"<td>{item.StartTime.ToString("yyyy/MM/dd")}</td>" +
-                            $"<td>{item.EndTime.ToString("yyyy/MM/dd")}</td>" +
+                            $"<td>{endTime}</td>" +
                             $"<td><a href=\"#\">前往</td>" +
                             $"</tr>";
                     }

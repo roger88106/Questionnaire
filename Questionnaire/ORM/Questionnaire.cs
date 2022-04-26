@@ -12,7 +12,7 @@ namespace Questionnaire.ORM
 
         public DateTime StartTime { get; set; }
 
-        public DateTime EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
         [Required]
         [StringLength(50)]

@@ -60,13 +60,13 @@ namespace Questionnaire.BackPages
         protected global::System.Web.UI.WebControls.TextBox TextBox_QuestionnaireName;
 
         /// <summary>
-        /// TextBox1 控制項。
+        /// TextBox_Content 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox TextBox_Content;
 
         /// <summary>
         /// TextBox_Start 控制項。
@@ -87,30 +87,39 @@ namespace Questionnaire.BackPages
         protected global::System.Web.UI.WebControls.TextBox TextBox_End;
 
         /// <summary>
-        /// CheckBox 控制項。
+        /// CheckBox_State 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox;
+        protected global::System.Web.UI.WebControls.CheckBox CheckBox_State;
 
         /// <summary>
-        /// Button1 控制項。
+        /// Button_Cancle 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button Button_Cancle;
 
         /// <summary>
-        /// Button2 控制項。
+        /// Button_OK 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button Button_OK;
+
+        /// <summary>
+        /// Label1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
     }
 }
