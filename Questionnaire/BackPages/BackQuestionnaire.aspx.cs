@@ -17,16 +17,7 @@ namespace Questionnaire.BackPages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //頁面初始化
-            Label1.Text = "";
-            Button_Question.Enabled = true;
-            this.Button_Result.Visible = true;
-            this.Button_BackStatisticalData.Visible = true;
-
-            //自己頁面的按鈕要關掉
-            Button_Questionnaire.Enabled = false;
-
-            //如果讀取到QueryString的ID值，且此ID是合法且找的到資料的話才進入編輯模式           
+            //嘗試讀取ID         
             try
             {//排除掉ID被竄改成不是整數的情形
                 questionnairesID = Convert.ToInt32(Request.QueryString["ID"]);
@@ -36,19 +27,42 @@ namespace Questionnaire.BackPages
                 questionnairesID = -1;
             }
 
-            //判斷此ID是否有對應的問卷
-            bool hasThisQuestionnairesID = _mgr.QuestionnaireIDinDatabase(0, questionnairesID);
-            if (questionnairesID >= 0 && hasThisQuestionnairesID)
-            {
-                //有的話就進入編輯模式
-                Mode_Revise();
+            if (!IsPostBack)
+            { 
+                //頁面初始化
+                Label1.Text = "";
+                Button_Question.Enabled = true;
+                this.Button_Result.Visible = true;
+                this.Button_BackStatisticalData.Visible = true;
+
+                //自己頁面的按鈕要關掉
+                Button_Questionnaire.Enabled = false;
+
+                //如果讀取到QueryString的ID值，且此ID是合法且找的到資料的話才進入編輯模式           
+                try
+                {//排除掉ID被竄改成不是整數的情形
+                    questionnairesID = Convert.ToInt32(Request.QueryString["ID"]);
+                }
+                catch (Exception)
+                {
+                    questionnairesID = -1;
+                }
+
+                //判斷此ID是否有對應的問卷
+                bool hasThisQuestionnairesID = _mgr.QuestionnaireIDinDatabase(0, questionnairesID);
+                if (questionnairesID >= 0 && hasThisQuestionnairesID)
+                {
+                    //有的話就進入編輯模式
+                    Mode_Revise();
+                }
+                else
+                {
+                    questionnairesID = -1;
+                    //沒有的話就進入新增模式
+                    Mode_New();
+                }
             }
-            else
-            {
-                questionnairesID = -1;
-                //沒有的話就進入新增模式
-                Mode_New();
-            }
+            
         }
 
         //新增模式
