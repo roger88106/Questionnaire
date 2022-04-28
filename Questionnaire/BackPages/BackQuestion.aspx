@@ -26,7 +26,7 @@
                     <tr>
                         <td>種類</td>
                         <td>
-                            <asp:DropDownList ID="DropDownList_Type" runat="server">
+                            <asp:DropDownList ID="DropDownList_Question" runat="server">
                                 <asp:ListItem>自訂問題</asp:ListItem>
                             </asp:DropDownList>
                         </td>
@@ -35,11 +35,8 @@
                         <td>問題</td>
                         <td>
                             <asp:TextBox ID="TextBox_Question" runat="server"></asp:TextBox>
-                            <asp:DropDownList ID="DropDownList2" runat="server">
+                            <asp:DropDownList ID="DropDownList_Type" runat="server" OnSelectedIndexChanged="DropDownList_Type_SelectedIndexChanged" AutoPostBack="true">
                                 <asp:ListItem>文字</asp:ListItem>
-                                <asp:ListItem>數字</asp:ListItem>
-                                <asp:ListItem>Email</asp:ListItem>
-                                <asp:ListItem>日期</asp:ListItem>
                                 <asp:ListItem>單選</asp:ListItem>
                                 <asp:ListItem>複選</asp:ListItem>
                             </asp:DropDownList>
@@ -55,12 +52,12 @@
                             <asp:TextBox ID="TextBox_Answer" runat="server"></asp:TextBox>(多個答案以 ; 分隔) 
                         </td>
                         <td>
-                            <asp:Button ID="Button_Add" runat="server" Text="加入" />
+                            <asp:Button ID="Button_Add" runat="server" Text="加入" OnClick="Button_Add_Click" />
                         </td>
                     </tr>
                 </table>
 
-                <asp:Button ID="Button_Delete" runat="server" Text="刪除" />
+                <asp:Button ID="Button_Delete" runat="server" Text="刪除" OnClick="Button_Delete_Click" />
                 <table border="1">
                     <tr>
                         <td></td>
@@ -75,4 +72,16 @@
             </td>
         </tr>
     </table>
+    <table width="99%">
+        <tr>
+            <td width="33%"></td>
+            <td width="33%">
+                <asp:Button ID="Button_Cancle" runat="server" Text="取消" />
+            </td>
+            <td width="33%">
+                <asp:Button ID="Button_OK" runat="server" Text="修改" OnClick="Button_OK_Click"/>
+            </td>
+        </tr>
+    </table>
+    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
 </asp:Content>

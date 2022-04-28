@@ -29,11 +29,11 @@ namespace Questionnaire.FrontPages
             }
 
             //判斷此ID是否有對應的可填寫問卷
-            bool hasThisQuestionnairesID = _questionnairesManager.QuestionnaireIDinDatabase(1, questionnairesID);
+            bool hasThisQuestionnairesID = _questionnairesManager.SelectQuestionnaireIDinDatabase(1, questionnairesID);
 
             if (questionnairesID >= 0 && hasThisQuestionnairesID)
             {
-                questionList = _mgr.GetQuestion(questionnairesID);
+                questionList = _mgr.GetQuestionList(questionnairesID);
                 questionCount = questionList.Count;
 
                 int _i = 0;//迴圈數

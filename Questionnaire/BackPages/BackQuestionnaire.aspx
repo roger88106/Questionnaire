@@ -10,10 +10,10 @@
                     <asp:Button ID="Button_Questionnaire" runat="server" Text="問卷" />
                 </td>
                 <td>
-                    <asp:Button ID="Button_Question" runat="server" Text="問題" />
+                    <asp:Button ID="Button_Question" runat="server" Text="問題"  OnClick="Button_Question_Click"/>
                 </td>
                 <td>
-                    <asp:Button ID="Button_Result" runat="server" Text="填寫資料" />
+                    <asp:Button ID="Button_Result" runat="server" Text="填寫資料" OnClick="Button_Result_Click" />
                 </td>
                 <td>
                     <asp:Button ID="Button_BackStatisticalData" runat="server" Text="統計" />

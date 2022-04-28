@@ -24,7 +24,7 @@ namespace Questionnaire.FrontPages
             try
             {
                 questionnairesID = Convert.ToInt32(Request.QueryString["ID"]);
-                questionList = _mgr.GetQuestion(questionnairesID);
+                questionList = _mgr.GetQuestionList(questionnairesID);
                 questionCount = questionList.Count;
 
                 respondent = (RespondentModel)HttpContext.Current.Session["Questions_Respondent"];

@@ -8,15 +8,32 @@
         <table>
             <tr>
                 <td>姓名</td>
-                <td></td>
+                <td>
+                    <asp:TextBox ID="TextBox_Name" runat="server" Enabled="false"></asp:TextBox>
+                </td>
+
                 <td>手機</td>
-                <td></td>
+                <td>
+                    <asp:TextBox ID="TextBox_Phone" runat="server" Enabled="false"></asp:TextBox>
+                </td>
             </tr>
             <tr>
                 <td>Email</td>
-                <td></td>
+                <td>
+                    <asp:TextBox ID="TextBox_Email" runat="server" Enabled="false"></asp:TextBox>
+                </td>
+
                 <td>年齡</td>
+                <td>
+                    <asp:TextBox ID="TextBox_Age" runat="server" Enabled="false"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
                 <td></td>
+                <td></td>
+                <td colspan="2">
+                    <asp:Label ID="Label_FillTime" runat="server" Text="Label"></asp:Label>
+                </td>
             </tr>
             <tr>
                 <td colspan="4">

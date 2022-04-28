@@ -51,13 +51,13 @@ namespace Questionnaire.BackPages
         protected global::System.Web.UI.WebControls.Button Button_BackStatisticalData;
 
         /// <summary>
-        /// DropDownList_Type 控制項。
+        /// DropDownList_Question 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList_Type;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownList_Question;
 
         /// <summary>
         /// TextBox_Question 控制項。
@@ -69,13 +69,13 @@ namespace Questionnaire.BackPages
         protected global::System.Web.UI.WebControls.TextBox TextBox_Question;
 
         /// <summary>
-        /// DropDownList2 控制項。
+        /// DropDownList_Type 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList2;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownList_Type;
 
         /// <summary>
         /// CheckBox_Required 控制項。
@@ -121,5 +121,32 @@ namespace Questionnaire.BackPages
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal Literal_QuestionTable;
+
+        /// <summary>
+        /// Button_Cancle 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button_Cancle;
+
+        /// <summary>
+        /// Button_OK 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button_OK;
+
+        /// <summary>
+        /// Label1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
     }
 }

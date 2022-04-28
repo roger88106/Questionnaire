@@ -17,6 +17,7 @@ namespace Questionnaire.ORM
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Respondent> Respondents { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<CommonlyQuestion> CommonlyQuestions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -50,6 +51,14 @@ namespace Questionnaire.ORM
 
             modelBuilder.Entity<Respondent>()
                 .Property(e => e.Email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CommonlyQuestion>()
+                .Property(e => e.QuestionContent)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CommonlyQuestion>()
+                .Property(e => e.QuestionOptions)
                 .IsUnicode(false);
         }
     }

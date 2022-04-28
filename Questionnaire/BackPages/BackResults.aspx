@@ -19,14 +19,13 @@
                 <td>
                     <asp:Button ID="Button_BackStatisticalData" runat="server" Text="統計" />
                 </td>
-                <td></td>
             </tr>
             <tr>
-                <td colspan="5">
+                <td colspan="4">
 
-                    <asp:Button ID="Button1" runat="server" Text="Button" />
+                    <asp:Button ID="Button1" runat="server" Text="匯出" />
 
-                    <table>
+                    <table border="1">
                         <tr>
                             <td>#</td>
                             <td>姓名</td>
@@ -34,8 +33,10 @@
                             <td>觀看細節</td>
                         </tr>
                         <asp:Literal ID="Literal_Table" runat="server"></asp:Literal>
+
                     </table>
 
+                    <asp:Literal ID="Literal_Pager" runat="server" />
                 </td>
             </tr>
         </table>

@@ -178,11 +178,13 @@
     </Compile>
     <Compile Include="Managers\QuestionManager.cs" />
     <Compile Include="Managers\QuestionnairesManager.cs" />
+    <Compile Include="Managers\RespondentManager.cs" />
     <Compile Include="Models\AnswerModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\QuestionnairesModel.cs" />
     <Compile Include="Models\RespondentModel.cs" />
     <Compile Include="ORM\Answer.cs" />
+    <Compile Include="ORM\CommonlyQuestion.cs" />
     <Compile Include="ORM\ContextModel.cs" />
     <Compile Include="ORM\Question.cs" />
     <Compile Include="ORM\Questionnaire.cs" />

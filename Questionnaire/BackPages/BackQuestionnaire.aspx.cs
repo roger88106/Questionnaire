@@ -40,7 +40,7 @@ namespace Questionnaire.BackPages
 
                 //如果讀取到QueryString的ID值，且此ID是合法且找的到資料的話才進入編輯模式           
                 try
-                {//排除掉ID被竄改成不是整數的情形
+                {//排除掉ID為空或被竄改成不是整數的情形
                     questionnairesID = Convert.ToInt32(Request.QueryString["ID"]);
                 }
                 catch (Exception)
@@ -49,7 +49,7 @@ namespace Questionnaire.BackPages
                 }
 
                 //判斷此ID是否有對應的問卷
-                bool hasThisQuestionnairesID = _mgr.QuestionnaireIDinDatabase(0, questionnairesID);
+                bool hasThisQuestionnairesID = _mgr.SelectQuestionnaireIDinDatabase(0, questionnairesID);
                 if (questionnairesID >= 0 && hasThisQuestionnairesID)
                 {
                     //有的話就進入編輯模式
@@ -146,7 +146,7 @@ namespace Questionnaire.BackPages
                         };
                         //存入session並跳轉頁面
                         HttpContext.Current.Session["QuestionnairesData"] = questionnaires;
-                        Response.Redirect("Questionnaire.aspx?ID=-1");
+                        Response.Redirect("BackQuestion.aspx");
                     }
                 }
 
@@ -192,11 +192,20 @@ namespace Questionnaire.BackPages
                         };
 
                         _mgr.UpdateQuestionnaire(questionnairesID, newQuestionnaire);
-
                         Label1.Text = "資料已修改";
                     }
                 }
             }
+        }
+
+        protected void Button_Question_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackQuestion.aspx?ID={questionnairesID}");
+        }
+
+        protected void Button_Result_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackResults.aspx?ID={questionnairesID}");
         }
     }
 }

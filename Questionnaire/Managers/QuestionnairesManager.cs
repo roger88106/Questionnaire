@@ -40,7 +40,7 @@ namespace Questionnaire.Managers
             }
             catch
             {
-                return null;
+                return new List<QuestionnairesModel>();
             }
         }
 
@@ -50,7 +50,7 @@ namespace Questionnaire.Managers
         /// <param name="state">狀態，-1為查詢全部，0為查詢除了刪除外的，1只查詢已啟用的</param>
         /// <param name="ID">想搜尋的ID</param>
         /// <returns></returns>
-        public QuestionnairesModel GetQuestionnaire(int state,int ID)
+        public QuestionnairesModel GetQuestionnaire(int state, int ID)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace Questionnaire.Managers
         /// <param name="state">狀態(0為只查沒被刪除的，1為只查已經啟用的，-1為包括已刪除的全部查詢)</param>
         /// <param name="ID">希望查詢的ID</param>
         /// <returns>是否存在資料庫內</returns>
-        public bool QuestionnaireIDinDatabase(int state, int ID)
+        public bool SelectQuestionnaireIDinDatabase(int state, int ID)
         {
             int[] IDs;
             using (ContextModel contextModel = new ContextModel())
@@ -135,6 +135,43 @@ namespace Questionnaire.Managers
                 item.QuestionnaireState = -1;//軟刪除
                 contextModel.SaveChanges();
             }
+        }
+
+
+        public int InsertQuestionnaires(QuestionnairesModel questionnaire)
+        {
+            if (questionnaire == null)
+            {
+                return -1;
+            }
+            else
+            {
+                using (ContextModel contextModel = new ContextModel())
+                {
+                    var Questionnaire = new Questionnaire.ORM.Questionnaire()
+                    {
+                        QuestionnaireContent = questionnaire.QuestionnaireContent,
+                        QuestionnaireState = questionnaire.QuestionnaireState,
+                        QuestionnaireTital = questionnaire.QuestionnaireTital,
+                        EndTime = questionnaire.EndTime,
+                        StartTime = questionnaire.StartTime
+                    };
+                    contextModel.Questionnaires.Add(Questionnaire);
+                    contextModel.SaveChanges();
+
+                    var query =
+                    from item in contextModel.Questionnaires
+                    orderby item.QuestionnaireID descending
+                    select item.QuestionnaireID;
+                    //最新的問卷會在最後面，所以找到最後一個ID並回傳
+                    foreach (var ID in query.ToArray())
+                    {
+                        return ID;
+                    }
+                }
+            }
+            return -1;
+
         }
     }
 }
