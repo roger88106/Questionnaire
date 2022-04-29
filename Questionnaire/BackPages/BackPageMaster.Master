@@ -22,8 +22,7 @@
                 <tr>
                     <td >
                         <a href="/BackPages/BackIndex.aspx">問卷管理</a><br />
-                        <a href="#">常用問題管理</a><br />
-                        <a href="/BackPages/BackQuestionnaire.aspx">測試用~問卷頁面</a>
+                        <a href="/BackPages/BackCommonly.aspx">常用問題管理</a>
                     </td>
                     <td>
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>

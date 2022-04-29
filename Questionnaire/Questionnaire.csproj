@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BackPages\BackCommonly.aspx" />
     <Content Include="BackPages\BackIndex.aspx" />
     <Content Include="BackPages\BackQuestion.aspx" />
     <Content Include="BackPages\BackQuestionnaire.aspx" />
@@ -90,6 +91,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackPages\BackCommonly.aspx.cs">
+      <DependentUpon>BackCommonly.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackPages\BackCommonly.aspx.designer.cs">
+      <DependentUpon>BackCommonly.aspx</DependentUpon>
+    </Compile>
     <Compile Include="BackPages\BackIndex.aspx.cs">
       <DependentUpon>BackIndex.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -176,13 +184,17 @@
     <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Managers\CommonlyQuestionManager.cs" />
     <Compile Include="Managers\QuestionManager.cs" />
     <Compile Include="Managers\QuestionnairesManager.cs" />
     <Compile Include="Managers\RespondentManager.cs" />
+    <Compile Include="Managers\StatisticalDataManager.cs" />
     <Compile Include="Models\AnswerModel.cs" />
+    <Compile Include="Models\CommonlyQuestionModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\QuestionnairesModel.cs" />
     <Compile Include="Models\RespondentModel.cs" />
+    <Compile Include="Models\StatisticalDataModel.cs" />
     <Compile Include="ORM\Answer.cs" />
     <Compile Include="ORM\CommonlyQuestion.cs" />
     <Compile Include="ORM\ContextModel.cs" />
