@@ -16,7 +16,7 @@
                     <asp:Button ID="Button_Result" runat="server" Text="填寫資料" OnClick="Button_Result_Click" />
                 </td>
                 <td>
-                    <asp:Button ID="Button_BackStatisticalData" runat="server" Text="統計" />
+                    <asp:Button ID="Button_BackStatisticalData" runat="server" Text="統計" OnClick="Button_BackStatisticalData_Click" />
                 </td>
                 <td></td>
             </tr>

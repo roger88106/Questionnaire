@@ -16,6 +16,7 @@ namespace Questionnaire.BackPages
         QuestionManager _mgr = new QuestionManager();
         List<QuestionModel> questionList = new List<QuestionModel>();
         QuestionnairesModel questionnaire;
+        Guid editQuestionID;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,15 +36,16 @@ namespace Questionnaire.BackPages
                 bool hasThisQuestionnairesID = _Questionnairesmgr.SelectQuestionnaireIDinDatabase(0, questionnairesID);
                 if (!(questionnairesID >= 0 && hasThisQuestionnairesID))
                     questionnairesID = -1;
-
-                questionList = (List<QuestionModel>)HttpContext.Current.Session["questionList"];
+                questionList = (List<QuestionModel>) HttpContext.Current.Session["questionList"];
+                if (Guid.TryParse(Request.QueryString["Edit"], out editQuestionID))
+                { }
             }
             else
             {
                 //頁面初始化
                 Button_Questionnaire.Enabled = true;
-                this.Button_Result.Visible = true;
-                this.Button_BackStatisticalData.Visible = true;
+                Button_Result.Visible = true;
+                
                 Literal_QuestionTable.Text = "";
 
                 //自己頁面的按鈕要關掉
@@ -65,6 +67,31 @@ namespace Questionnaire.BackPages
                     //沒有的話就進入新增模式
                     Mode_New();
                 }
+
+                //如果Edit有值的話才做
+                if (Guid.TryParse(Request.QueryString["Edit"], out editQuestionID))
+                {
+                    foreach (var item in questionList)
+                    {
+                        if (item.QuestionID == editQuestionID)
+                        {
+                            TextBox_Answer.Text = item.QuestionOptions;
+                            TextBox_Question.Text = item.QuestionContent;
+                            DropDownList_Type.SelectedIndex = item.QuestionType;
+                            CheckBox_Required.Checked = item.Required;
+                            DropDownList_Type.Enabled = false;//不能調整回答模式，防止已經被回答的問題發生錯誤
+                            if (!(item.QuestionType == 1 || item.QuestionType == 2))
+                            {
+                                TextBox_Answer.Enabled = false;
+                            }
+                            else
+                            {
+                                TextBox_Answer.Enabled = true;
+                            }
+                            Button_Add.Text = "修改";
+                        }
+                    }
+                }
             }
 
             //如果選項是文字，就不需要填回答的TextBox
@@ -80,18 +107,38 @@ namespace Questionnaire.BackPages
             Button_OK.Text = "下一步";
             Button_OK.OnClientClick = "Button_OK_Click";
 
+
+
             questionnaire = (QuestionnairesModel)HttpContext.Current.Session["QuestionnairesData"];
-            //如果讀不到Session內的問卷資料，就提示錯誤並關閉所有功能
+
+            //如果是從編輯問題過來的話
+            if (Request.QueryString["Edit"] != null)
+                questionList = (List<QuestionModel>)HttpContext.Current.Session["questionList"];
+
+            HttpContext.Current.Session["questionList"] = questionList;
+            GetTable(questionList);
+
+            //如果讀不到Session內的問卷資料，就提示錯誤並關閉所有功能(例如超時)
             if (questionnaire == null)
             {
                 Label1.Text = "出現錯誤，請重新製作問卷";
             }
-            
+
         }
         private void Mode_Revise()
         {
-            questionList = _mgr.GetQuestionList(questionnairesID);
-            HttpContext.Current.Session["questionList"] = questionList;
+            //如果是從編輯問題過來的話
+            if (Request.QueryString["Edit"] != null)
+            {
+                questionList = (List<QuestionModel>)HttpContext.Current.Session["questionList"];
+            }
+
+            //如果沒有進入上面的IF，或者進了但卻沒取到東西的話
+            if (questionList == null || questionList.Count() == 0)
+            {
+                questionList = _mgr.GetQuestionList(questionnairesID);
+                HttpContext.Current.Session["questionList"] = questionList;
+            }
 
             GetTable(questionList);
         }
@@ -116,6 +163,9 @@ namespace Questionnaire.BackPages
                     string required = "";
                     if (item.Required)
                         required = "checked = \"true\"";
+                    string textID = "";
+                    if (questionnairesID > 0)
+                        textID = $"ID={questionnairesID}&";
 
                     Literal_QuestionTable.Text += $"<tr>" +
                         $"<td><input type=\"checkbox\" name=\"checkBox_Delete\" value = \"{_i}\" /></td>" +
@@ -123,7 +173,7 @@ namespace Questionnaire.BackPages
                         $"<td>{item.QuestionContent}</td>" +
                         $"<td>{type}</td>" +
                         $"<td><input type=\"checkbox\" name=\"checkBox_Required\" value = \"{_i}\" {required} /></td>" +
-                        $"<td><a href=\"\">編輯</a></td>" +
+                        $"<td><a href=\"?{textID}Edit={item.QuestionID}\">編輯</a></td>" +
                         $"</tr>";
                     _i += 1;
                 }
@@ -134,18 +184,44 @@ namespace Questionnaire.BackPages
         {
             if (questionList == null)
                 questionList = new List<QuestionModel>();
-            
-            questionList.Add(new QuestionModel
-            {
-                QuestionnairesID = questionnairesID,
-                QuestionID = Guid.NewGuid(),
-                QuestionType = DropDownList_Type.SelectedIndex,
-                QuestionContent = TextBox_Question.Text,
-                QuestionOptions = TextBox_Answer.Text,
-                Required = CheckBox_Required.Checked,
-                QuestionOrder = questionList.Count()
-            });
 
+            if (Button_Add.Text == "修改")
+            {
+                int _i = 0;
+                foreach (var item in questionList)
+                {
+                    if (editQuestionID == item.QuestionID)
+                    {
+                        questionList[_i].Required = CheckBox_Required.Checked;
+                        questionList[_i].QuestionContent = TextBox_Question.Text;
+                        questionList[_i].QuestionOptions = TextBox_Answer.Text;
+                    }
+                    _i++;
+                }
+                HttpContext.Current.Session["questionList"] = questionList;
+                Button_Add.Text = "新增";
+                TextBox_Answer.Text = "";
+                TextBox_Question.Text = "";
+                DropDownList_Type.SelectedIndex = 0;
+                CheckBox_Required.Checked = false;
+                DropDownList_Type.Enabled = true;//不能調整回答模式，防止已經被回答的問題發生錯誤
+                TextBox_Answer.Enabled = false;
+                
+
+            }
+            else
+            {
+                questionList.Add(new QuestionModel
+                {
+                    QuestionnairesID = questionnairesID,
+                    QuestionID = Guid.NewGuid(),
+                    QuestionType = DropDownList_Type.SelectedIndex,
+                    QuestionContent = TextBox_Question.Text,
+                    QuestionOptions = TextBox_Answer.Text,
+                    Required = CheckBox_Required.Checked,
+                    QuestionOrder = questionList.Count()
+                });
+            }
             HttpContext.Current.Session["questionList"] = questionList;
             GetTable(questionList);
         }
@@ -173,7 +249,21 @@ namespace Questionnaire.BackPages
             //編輯模式
             else
             {
+                int _i = 0;
+                string[] required = Request.Form["checkBox_Required"].Split(',');
+                foreach (var item in questionList)
+                {
+                    if (Array.IndexOf(required, _i.ToString()) == -1)
+                        questionList[_i].Required = false;
+                    else
+                        questionList[_i].Required = true;
+
+                    _i++;
+                }
+
                 _mgr.UpdateQuestionnaire(questionnairesID, questionList);
+
+                Mode_Revise();
             }
         }
 
@@ -181,7 +271,6 @@ namespace Questionnaire.BackPages
         {
             string[] poshion;
 
-            int _i = 0;
             if (!string.IsNullOrEmpty(Request.Form["checkBox_Delete"]))
             {
                 poshion = Request.Form["checkBox_Delete"].Split(',');
@@ -195,6 +284,27 @@ namespace Questionnaire.BackPages
             }
             HttpContext.Current.Session["QuestionnairesData"] = questionList;
             GetTable(questionList);
+        }
+
+        protected void Button_Question_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackQuestion.aspx?ID={questionnairesID}");
+        }
+
+        protected void Button_Result_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackResults.aspx?ID={questionnairesID}");
+        }
+
+        protected void Button_BackStatisticalData_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackStatisticalData.aspx?ID={questionnairesID}");
+        }
+
+        protected void Button_Questionnaire_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackQuestionnaire.aspx?ID={questionnairesID}");
+
         }
     }
 }

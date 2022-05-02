@@ -19,6 +19,21 @@ namespace Questionnaire.BackPages
         int nowPage, maxPage;
         List<RespondentModel> allRespondentList,nowPageList;
 
+        protected void Button_Questionnaire_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackQuestionnaire.aspx?ID={questionnairesID}");
+        }
+
+        protected void Button_Question_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackQuestion.aspx?ID={questionnairesID}");
+        }
+
+        protected void Button_BackStatisticalData_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackStatisticalData.aspx?ID={questionnairesID}");
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             //嘗試讀取ID         

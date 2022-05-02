@@ -33,6 +33,36 @@ namespace Questionnaire.FrontPages
 
             if (questionnairesID >= 0 && hasThisQuestionnairesID)
             {
+                //設定問卷標題跟內文
+                QuestionnairesModel questionnaire = _questionnairesManager.GetQuestionnaire(1, questionnairesID);
+                Label_Title.Text = questionnaire.QuestionnaireTital;
+                Label_Content.Text = questionnaire.QuestionnaireContent;
+
+                //顯示起始結束時間
+                Label_Time.Text = questionnaire.StartTime.ToString("yyyy/MM/dd");
+                if (questionnaire.EndTime.HasValue)
+                    Label_Time.Text += " ~ "+questionnaire.EndTime.Value.ToString("yyyy/MM/dd");
+
+                //判斷是否是投票中的問卷，不是的話就關掉送出功能
+                DateTime end;
+                if (questionnaire.EndTime.HasValue)
+                    end = questionnaire.EndTime.Value;
+                else
+                    end = DateTime.MaxValue.AddDays(-1);
+                if (questionnaire.StartTime > DateTime.Now)
+                {
+                    Label_state.Text = "尚未開放";
+                    Button_OK.Enabled = false;
+                }
+                else if (end.AddDays(1) < DateTime.Now)//到隔天的0點0分才結束
+                {
+                    Label_state.Text = "已結束";
+                    Button_OK.Enabled = false;
+                }
+                else
+                    Label_state.Text = "投票中";
+
+                //顯示下方選項區
                 questionList = _mgr.GetQuestionList(questionnairesID);
                 questionCount = questionList.Count;
 
@@ -79,9 +109,6 @@ namespace Questionnaire.FrontPages
                 Literal_Questions.Text = "問卷讀取出錯";
                 Button_OK.Enabled = false;
             }
-            
-
-            //之後把按鈕改成動態生成的，如果問卷生成出錯，按鈕就不要出現
         }
 
         protected void Button_OK_Click(object sender, EventArgs e)
@@ -153,7 +180,7 @@ namespace Questionnaire.FrontPages
             if (string.IsNullOrEmpty(TextBox_Name.Text) || string.IsNullOrEmpty(TextBox_Phone.Text) ||
                 string.IsNullOrEmpty(TextBox_Email.Text) || string.IsNullOrEmpty(TextBox_Age.Text))
                 Label1.Text = "個人資料請確實填寫";
-            else if(TextBox_Phone.Text.Count()!= 10)
+            else if (TextBox_Phone.Text.Count() != 10)
             {
                 Label1.Text = "手機號碼格式錯誤";
             }

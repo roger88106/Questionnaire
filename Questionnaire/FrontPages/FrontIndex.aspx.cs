@@ -50,6 +50,7 @@ namespace Questionnaire.FrontPages
             {
                 int _i = 0;//迴圈數
                 string state;
+                string titleText;
                 foreach (var item in list)
                 {
                     if (item.QuestionnaireState > 0)
@@ -64,13 +65,20 @@ namespace Questionnaire.FrontPages
                             end = DateTime.MaxValue.AddDays(-1);
                         }
 
+                        //預設標題文字為正常文字
+                        titleText = item.QuestionnaireTital;
 
                         if (item.StartTime > DateTime.Now)
                             state = "尚未開放";
                         else if (end.AddDays(1) < DateTime.Now)//到隔天的0點0分才結束
                             state = "已結束";
                         else
+                        {
                             state = "投票中";
+                            //如果在投票中，就把標題文字改成超連結
+                            titleText = $"<a href=\"Questionnaire.aspx?ID={item.QuestionnaireID}\">{item.QuestionnaireTital}</a>";
+                        }
+                            
 
 
                         string endTime;
@@ -83,13 +91,15 @@ namespace Questionnaire.FrontPages
                             endTime = " - ";
                         }
 
+
+
                         Literal_Table.Text += $"<tr>" +
                             $"<td>{item.QuestionnaireID}</td>" +
-                            $"<td><a href=\"Questionnaire.aspx?ID={item.QuestionnaireID}\">{item.QuestionnaireTital}</a></td>" +
+                            $"<td>{titleText}</td>" +
                             $"<td>{state}</td>" +
                             $"<td>{item.StartTime.ToString("yyyy/MM/dd")}</td>" +
                             $"<td>{endTime}</td>" +
-                            $"<td><a href=\"#\">前往</td>" +
+                            $"<td><a href=\"StatisticalData.aspx?ID={item.QuestionnaireID}\">前往</td>" +
                             $"</tr>";
                     }
                     _i += 1;

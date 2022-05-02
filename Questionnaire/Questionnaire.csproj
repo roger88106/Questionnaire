@@ -86,6 +86,7 @@
     <Content Include="FrontPages\Questionnaire.aspx" />
     <Content Include="FrontPages\QuestionnaireCheck.aspx" />
     <Content Include="FrontPages\QuestionnaireGraph.aspx" />
+    <Content Include="FrontPages\StatisticalData.aspx" />
     <Content Include="Index.aspx" />
     <Content Include="SQL資料\script.sql" />
     <Content Include="Web.config" />
@@ -174,6 +175,13 @@
     </Compile>
     <Compile Include="FrontPages\QuestionnaireGraph.aspx.designer.cs">
       <DependentUpon>QuestionnaireGraph.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FrontPages\StatisticalData.aspx.cs">
+      <DependentUpon>StatisticalData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FrontPages\StatisticalData.aspx.designer.cs">
+      <DependentUpon>StatisticalData.aspx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PaginationHelper.cs" />
     <Compile Include="Helpers\SearchHelper.cs" />

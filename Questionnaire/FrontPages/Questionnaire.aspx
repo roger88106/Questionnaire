@@ -9,15 +9,25 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
 
-            <h1>動態問卷填答系統</h1>
+        <table style="width:99%;">
+            <tr>
+                <td><h1>動態問卷填答系統</h1></td>
+                <td align="right">
+                    <asp:Label ID="Label_state" runat="server" Text=""></asp:Label><br />
+                    <asp:Label ID="Label_Time" runat="server" Text=""></asp:Label><br />
 
-            <h3>
+                </td>
+            </tr>
+        </table>
+        
+        <div style="width: 700px; margin: 0 auto;">
+            <h2>
                 <asp:Label ID="Label_Title" runat="server" Text="問卷標題"></asp:Label>
-            </h3>
-            <asp:Label ID="Content" runat="server" Text="問卷內文"></asp:Label>
-
+            </h2>
+            <asp:Label ID="Label_Content" runat="server" Text="問卷內文"></asp:Label>
+            <br />
+            <br />
             <table>
                 <tr>
                     <td>姓名</td>
@@ -40,9 +50,7 @@
                         <asp:TextBox ID="TextBox_Age" runat="server" TextMode="Number">12</asp:TextBox></td>
                 </tr>
             </table>
-        </div>
-        <div>
-
+            <br />
             <asp:Literal ID="Literal_Questions" runat="server"></asp:Literal>
             <table>
                 <tr>

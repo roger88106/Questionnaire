@@ -6,16 +6,16 @@
     <table border="1">
         <tr>
             <td>
-                <asp:Button ID="Button_Questionnaire" runat="server" Text="問卷" />
+                <asp:Button ID="Button_Questionnaire" runat="server" Text="問卷" OnClick="Button_Questionnaire_Click" />
             </td>
             <td>
                 <asp:Button ID="Button_Question" runat="server" Text="問題" />
             </td>
             <td>
-                <asp:Button ID="Button_Result" runat="server" Text="填寫資料" />
+                <asp:Button ID="Button_Result" runat="server" Text="填寫資料" OnClick="Button_Result_Click"/>
             </td>
             <td>
-                <asp:Button ID="Button_BackStatisticalData" runat="server" Text="統計" />
+                <asp:Button ID="Button_BackStatisticalData" runat="server" Text="統計" OnClick="Button_BackStatisticalData_Click" />
             </td>
             <td></td>
         </tr>

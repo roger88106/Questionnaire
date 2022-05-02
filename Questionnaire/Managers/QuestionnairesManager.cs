@@ -104,7 +104,6 @@ namespace Questionnaire.Managers
         /// <returns>是否存在資料庫內</returns>
         public bool SelectQuestionnaireIDinDatabase(int state, int ID)
         {
-            int[] IDs;
             using (ContextModel contextModel = new ContextModel())
             {
                 var query =

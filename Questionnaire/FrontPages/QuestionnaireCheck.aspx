@@ -10,17 +10,15 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <table width="99%">
-                <tr>
-                    <td>
-                        <h1>動態問卷填答系統</h1>
-                    </td>
-                    <td align="left">
-                        <asp:Label ID="Label_State" runat="server" Text=""></asp:Label><br />
-                        <asp:Label ID="Label_Date" runat="server" Text=""></asp:Label>
-                    </td>
-                </tr>
-            </table>
+        <table style="width:99%;">
+            <tr>
+                <td><h1>動態問卷填答系統</h1></td>
+                <td align="right">
+                    <asp:Label ID="Label_state" runat="server" Text="投票中"></asp:Label><br />
+                    <asp:Label ID="Label_Time" runat="server" Text="123/456 "></asp:Label>
+                </td>
+            </tr>
+        </table>
         </div>
         <div>
             <table>

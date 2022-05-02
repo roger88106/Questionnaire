@@ -114,7 +114,8 @@ namespace Questionnaire.Managers
                             QuestionID = questionItem.QuestionID,
                             QuestionOptions = questionItem.QuestionOptions,
                             QuestionOrder = _i,
-                            QuestionType = questionItem.QuestionType
+                            QuestionType = questionItem.QuestionType,
+                            Required = questionItem.Required
                         };
                         contextModel.Questions.Add(question);
                         _i++;

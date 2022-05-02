@@ -14,7 +14,7 @@ namespace Questionnaire.Managers
         /// 取得統計結果
         /// </summary>
         /// <param name="questionnaireID">問卷的ID</param>
-        /// <returns>每題的結果列表</returns>
+        /// <returns>每題的結果列表  List<StatisticalDataModel></returns>
         public List<StatisticalDataModel> GetStatisticalData(int questionnaireID)
         {
             List<StatisticalDataModel> statisticalDataList;
@@ -32,7 +32,7 @@ namespace Questionnaire.Managers
                         QuestionID = item.QuestionID,
                         Content = item.QuestionContent,
                         option = item.QuestionOptions,
-                        type = item.QuestionType
+                        type = item.QuestionType,
                     };
                 statisticalDataList = query.ToList();
 
@@ -45,7 +45,7 @@ namespace Questionnaire.Managers
                         AnswerID = item.AnswerID,
                         QuestionID = item.QuestionID.Value,
                         QuestionnaireID = item.QuestionnaireID.Value,
-                        RespondentID = item.RespondentID.Value
+                        RespondentID = item.RespondentID.Value,
                     };
                 answerList = query2.ToList();
             }
@@ -79,7 +79,6 @@ namespace Questionnaire.Managers
 
                     List<int> answerCount = new List<int>();
                     List<double> answerPercent = new List<double>();
-                    
 
                     //取得每個選項的回答總數
                     foreach (var item3 in countAnswers)
@@ -87,8 +86,7 @@ namespace Questionnaire.Managers
                         answerCount.Add(item3);
 
                         //做除法要先轉成浮點數，不然除出來會是零
-                        answerPercent.Add((double)item3 / (double)count);
-                        
+                        answerPercent.Add((double)item3 / (double)count);   
                     }
 
                     statisticalDataList[_i].answerCount = answerCount;

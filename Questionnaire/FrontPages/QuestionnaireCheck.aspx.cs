@@ -17,6 +17,7 @@ namespace Questionnaire.FrontPages
         RespondentModel respondent;
         List<AnswerModel> answersList = new List<AnswerModel>();
         QuestionManager _mgr = new QuestionManager();
+        QuestionnairesManager _questionnairesManager = new QuestionnairesManager();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,6 +34,15 @@ namespace Questionnaire.FrontPages
                 //如果Session內的ID跟QueryString的ID對不上，就防呆，跳過所有內容
                 if (questionnairesID != respondent.QuestionnairesID)
                     throw new Exception("ID錯誤");
+
+                //設定問卷標題跟內文
+                QuestionnairesModel questionnaire = _questionnairesManager.GetQuestionnaire(1, questionnairesID);
+                Label_Title.Text = questionnaire.QuestionnaireTital;
+
+                //顯示起始結束時間
+                Label_Time.Text = questionnaire.StartTime.ToString("yyyy/MM/dd");
+                if (questionnaire.EndTime.HasValue)
+                    Label_Time.Text += " ~ " + questionnaire.EndTime.Value.ToString("yyyy/MM/dd");
 
                 Label_Name.Text = respondent.Name;
                 Label_Phone.Text = respondent.PhoneNumber;

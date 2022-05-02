@@ -7,48 +7,30 @@
 // </自動產生的>
 //------------------------------------------------------------------------------
 
-namespace Questionnaire.BackPages
+namespace Questionnaire.FrontPages
 {
 
 
-    public partial class BackStatisticalData
+    public partial class StatisticalData
     {
 
         /// <summary>
-        /// Button_Questionnaire 控制項。
+        /// form1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_Questionnaire;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// Button_Question 控制項。
+        /// Label_Title 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_Question;
-
-        /// <summary>
-        /// Button_Result 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_Result;
-
-        /// <summary>
-        /// Button_BackStatisticalData 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_BackStatisticalData;
+        protected global::System.Web.UI.WebControls.Label Label_Title;
 
         /// <summary>
         /// Literal1 控制項。

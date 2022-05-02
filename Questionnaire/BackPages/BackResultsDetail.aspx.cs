@@ -134,5 +134,24 @@ namespace Questionnaire.BackPages
             public bool required { get; set; }
         }
 
+        protected void Button_Questionnaire_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackQuestionnaire.aspx?ID={questionnairesID}");
+        }
+
+        protected void Button_Question_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackQuestion.aspx?ID={questionnairesID}");
+        }
+
+        protected void Button_Result_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackResults.aspx?ID={questionnairesID}");
+        }
+
+        protected void Button_BackStatisticalData_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"BackStatisticalData.aspx?ID={questionnairesID}");
+        }
     }
 }

@@ -24,6 +24,24 @@ namespace Questionnaire.FrontPages
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// Label_state 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label_state;
+
+        /// <summary>
+        /// Label_Time 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label_Time;
+
+        /// <summary>
         /// Label_Title 控制項。
         /// </summary>
         /// <remarks>
@@ -33,13 +51,13 @@ namespace Questionnaire.FrontPages
         protected global::System.Web.UI.WebControls.Label Label_Title;
 
         /// <summary>
-        /// Content 控制項。
+        /// Label_Content 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Content;
+        protected global::System.Web.UI.WebControls.Label Label_Content;
 
         /// <summary>
         /// TextBox_Name 控制項。
