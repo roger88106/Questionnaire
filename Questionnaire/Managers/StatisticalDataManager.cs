@@ -86,7 +86,10 @@ namespace Questionnaire.Managers
                         answerCount.Add(item3);
 
                         //做除法要先轉成浮點數，不然除出來會是零
-                        answerPercent.Add((double)item3 / (double)count);   
+                        if (item3 == 0 & count == 0)
+                            answerPercent.Add(0);
+                        else
+                            answerPercent.Add((double)item3 / (double)count);
                     }
 
                     statisticalDataList[_i].answerCount = answerCount;
