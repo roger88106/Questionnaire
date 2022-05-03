@@ -38,7 +38,7 @@
                         <td>#</td>
                         <td>問題</td>
                         <td>種類</td>
-                        <td>修改</td>
+                        <td>選項</td>
                     </tr>
                     <asp:Literal ID="Literal_QuestionTable" runat="server"></asp:Literal>
                 </table>

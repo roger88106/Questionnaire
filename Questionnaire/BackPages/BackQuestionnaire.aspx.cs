@@ -73,6 +73,8 @@ namespace Questionnaire.BackPages
             this.Button_BackStatisticalData.Visible = false;
             Button_OK.Text = "下一步";
             Button_OK.OnClientClick = "Button_OK_Click";
+            CheckBox_State.Checked = true;
+            TextBox_Start.Text = DateTime.Now.ToString("yyyy-MM-dd");
         }
 
         //編輯模式

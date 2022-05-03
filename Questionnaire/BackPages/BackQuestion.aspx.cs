@@ -14,12 +14,15 @@ namespace Questionnaire.BackPages
         int questionnairesID;//讀到對應的ID就是修改模式，讀不到的話把ID轉成-1就是新增模式
         QuestionnairesManager _Questionnairesmgr = new QuestionnairesManager();
         QuestionManager _mgr = new QuestionManager();
+        CommonlyQuestionManager _commonlyMgr = new CommonlyQuestionManager();
         List<QuestionModel> questionList = new List<QuestionModel>();
         QuestionnairesModel questionnaire;
+        List<CommonlyQuestionModel> commonlyList;
         Guid editQuestionID;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Label1.Text = "";
             //取得ID
             try
             {//排除掉ID被竄改成不是整數的情形
@@ -36,7 +39,7 @@ namespace Questionnaire.BackPages
                 bool hasThisQuestionnairesID = _Questionnairesmgr.SelectQuestionnaireIDinDatabase(0, questionnairesID);
                 if (!(questionnairesID >= 0 && hasThisQuestionnairesID))
                     questionnairesID = -1;
-                questionList = (List<QuestionModel>) HttpContext.Current.Session["questionList"];
+                questionList = (List<QuestionModel>)HttpContext.Current.Session["questionList"];
                 if (Guid.TryParse(Request.QueryString["Edit"], out editQuestionID))
                 { }
             }
@@ -45,13 +48,18 @@ namespace Questionnaire.BackPages
                 //頁面初始化
                 Button_Questionnaire.Enabled = true;
                 Button_Result.Visible = true;
-                
+
                 Literal_QuestionTable.Text = "";
 
                 //自己頁面的按鈕要關掉
                 Button_Question.Enabled = false;
 
                 //讀取常用問題
+                commonlyList = _commonlyMgr.GetCommonlyList();
+                foreach (var item in commonlyList)
+                {
+                    DropDownList_Question.Items.Add(item.QuestionContent);
+                }
 
 
                 //判斷ID是否有對應的問卷
@@ -206,8 +214,6 @@ namespace Questionnaire.BackPages
                 CheckBox_Required.Checked = false;
                 DropDownList_Type.Enabled = true;//不能調整回答模式，防止已經被回答的問題發生錯誤
                 TextBox_Answer.Enabled = false;
-                
-
             }
             else
             {
@@ -224,46 +230,102 @@ namespace Questionnaire.BackPages
             }
             HttpContext.Current.Session["questionList"] = questionList;
             GetTable(questionList);
+            
+            DropDownList_Question.SelectedIndex = 0;
+            DropDownList_Type.SelectedIndex = 0;
+            DropDownList_Type.Enabled = true;
+            TextBox_Answer.Text = "";
+            TextBox_Question.Text = "";
+            TextBox_Answer.Enabled = false;
         }
 
         protected void DropDownList_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DropDownList_Type.SelectedIndex == 0)
+            {
                 TextBox_Answer.Enabled = false;
+                TextBox_Answer.Text = "";
+            }
+
             else
                 TextBox_Answer.Enabled = true;
         }
 
-        protected void Button_OK_Click(object sender, EventArgs e)
+        protected void DropDownList_Question_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //新增模式
-            if (questionnairesID == -1)
+            //0為自訂問題，把輸入選項回到預設
+            if (DropDownList_Question.SelectedIndex == 0)
             {
-                //儲存問卷
-                QuestionnairesModel questionnaire = (QuestionnairesModel)HttpContext.Current.Session["QuestionnairesData"];
-                questionnairesID = _Questionnairesmgr.InsertQuestionnaires(questionnaire);
-
-                //儲存問題
-                _mgr.UpdateQuestionnaire(questionnairesID, questionList);
+                TextBox_Question.Text = "";
+                TextBox_Answer.Text = "";
+                DropDownList_Type.SelectedIndex = 0;
+                DropDownList_Type.Enabled = true;
+                CheckBox_Required.Checked = false;
             }
-            //編輯模式
             else
             {
-                int _i = 0;
-                string[] required = Request.Form["checkBox_Required"].Split(',');
-                foreach (var item in questionList)
-                {
-                    if (Array.IndexOf(required, _i.ToString()) == -1)
-                        questionList[_i].Required = false;
-                    else
-                        questionList[_i].Required = true;
+                int selectIndex = DropDownList_Question.SelectedIndex - 1;
+                commonlyList = _commonlyMgr.GetCommonlyList();
 
-                    _i++;
+                TextBox_Question.Text = commonlyList[selectIndex].QuestionContent;
+                DropDownList_Type.SelectedIndex = commonlyList[selectIndex].QuestionType;
+                DropDownList_Type.Enabled = false;
+                if (DropDownList_Type.SelectedIndex == 1 || DropDownList_Type.SelectedIndex == 2)
+                {
+                    TextBox_Answer.Text = commonlyList[selectIndex].QuestionOptions;
+                    TextBox_Answer.Enabled = true;
+                }
+                else
+                {
+                    TextBox_Answer.Text = "";
+                    TextBox_Answer.Enabled = false;
                 }
 
-                _mgr.UpdateQuestionnaire(questionnairesID, questionList);
+            }
+        }
 
-                Mode_Revise();
+        protected void Button_OK_Click(object sender, EventArgs e)
+        {
+            if (questionList == null || questionList == new List<QuestionModel>())
+            {
+
+            }
+            else
+            {
+                //新增模式
+                if (questionnairesID == -1)
+                {
+                    //儲存問卷
+                    QuestionnairesModel questionnaire = (QuestionnairesModel)HttpContext.Current.Session["QuestionnairesData"];
+                    questionnairesID = _Questionnairesmgr.InsertQuestionnaires(questionnaire);
+
+                    //儲存問題
+                    _mgr.UpdateQuestionnaire(questionnairesID, questionList);
+                    Response.Redirect("BackIndex.aspx");
+                }
+                //編輯模式
+                else
+                {
+                    int _i = 0;
+                    if (!string.IsNullOrEmpty(Request.Form["checkBox_Required"]))
+                    {
+                        string[] required = Request.Form["checkBox_Required"].Split(',');
+                        foreach (var item in questionList)
+                        {
+                            if (Array.IndexOf(required, _i.ToString()) == -1)
+                                questionList[_i].Required = false;
+                            else
+                                questionList[_i].Required = true;
+
+                            _i++;
+                        }
+                    }
+
+                    _mgr.UpdateQuestionnaire(questionnairesID, questionList);
+
+                    Mode_Revise();
+                    Label1.Text = "問題已處存";
+                }
             }
         }
 
@@ -304,7 +366,8 @@ namespace Questionnaire.BackPages
         protected void Button_Questionnaire_Click(object sender, EventArgs e)
         {
             Response.Redirect($"BackQuestionnaire.aspx?ID={questionnairesID}");
-
         }
+
+
     }
 }

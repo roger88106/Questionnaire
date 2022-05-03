@@ -75,7 +75,7 @@ namespace Questionnaire.FrontPages
                     if (item.Required)
                         requiredString = "(必填)";
 
-                    questionsHtml += $"<p>{_i}. {item.QuestionContent.Trim()}{requiredString}</p>"; //題目的HTML
+                    questionsHtml += $"<p>{_i+1}. {item.QuestionContent.Trim()}{requiredString}</p>"; //題目的HTML
 
                     if (item.QuestionType == 1 || item.QuestionType == 2) //單、複選
                     {

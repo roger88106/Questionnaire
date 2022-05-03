@@ -26,7 +26,7 @@
                     <tr>
                         <td>種類</td>
                         <td>
-                            <asp:DropDownList ID="DropDownList_Question" runat="server">
+                            <asp:DropDownList ID="DropDownList_Question" runat="server" OnSelectedIndexChanged="DropDownList_Question_SelectedIndexChanged" AutoPostBack="true" >
                                 <asp:ListItem>自訂問題</asp:ListItem>
                             </asp:DropDownList>
                         </td>

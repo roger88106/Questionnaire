@@ -73,7 +73,7 @@ namespace Questionnaire.BackPages
             }
             if (string.IsNullOrEmpty(Literal1.Text))
             {
-                Literal1.Text = "此問卷尚未被填寫";
+                Literal1.Text = "此問卷沒有可以統計的資料";
             }
         }
 

@@ -88,6 +88,7 @@
     <Content Include="FrontPages\QuestionnaireGraph.aspx" />
     <Content Include="FrontPages\StatisticalData.aspx" />
     <Content Include="Index.aspx" />
+    <Content Include="ReadMe.txt" />
     <Content Include="SQL資料\script.sql" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -199,6 +200,7 @@
     <Compile Include="Managers\StatisticalDataManager.cs" />
     <Compile Include="Models\AnswerModel.cs" />
     <Compile Include="Models\CommonlyQuestionModel.cs" />
+    <Compile Include="Models\CsvModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\QuestionnairesModel.cs" />
     <Compile Include="Models\RespondentModel.cs" />
@@ -215,6 +217,7 @@
   <ItemGroup>
     <Content Include="BackPages\BackPageMaster.Master" />
     <None Include="packages.config" />
+    <Content Include="SQL資料\Questionnaire.bak" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

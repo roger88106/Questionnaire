@@ -51,13 +51,13 @@ namespace Questionnaire.BackPages
         protected global::System.Web.UI.WebControls.Button Button_BackStatisticalData;
 
         /// <summary>
-        /// Button1 控制項。
+        /// Button_OutCsv 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button Button_OutCsv;
 
         /// <summary>
         /// Literal_Table 控制項。

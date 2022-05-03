@@ -100,7 +100,7 @@ namespace Questionnaire.BackPages
                         $"<td>{state}</td>" +
                         $"<td>{item.StartTime.ToString("yyyy/MM/dd")}</td>" +
                         $"<td>{endTime}</td>" +
-                        $"<td><a href=\"#\">前往</td>" +
+                        $"<td><a href=\"BackStatisticalData.aspx?ID={item.QuestionnaireID}\">前往</td>" +
                         $"</tr>";
 
                     _i += 1;

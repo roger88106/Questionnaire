@@ -46,7 +46,7 @@ namespace Questionnaire.BackPages
                         $"<td>{_i + 1}</td>" +
                         $"<td>{item.QuestionContent}</td>" +
                         $"<td>{type}</td>" +
-                        $"<td><a href=\"\">編輯</a></td>" +
+                        $"<td>{item.QuestionOptions}</td>" +
                         $"</tr>";
                     _i += 1;
                 }
@@ -96,7 +96,10 @@ namespace Questionnaire.BackPages
         protected void DropDownList_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DropDownList_Type.SelectedIndex == 0)
+            { 
                 TextBox_Answer.Enabled = false;
+                TextBox_Answer.Text = "";
+            }
             else
                 TextBox_Answer.Enabled = true;
         }

@@ -23,7 +23,7 @@
             <tr>
                 <td colspan="4">
 
-                    <asp:Button ID="Button1" runat="server" Text="匯出" />
+                    <asp:Button ID="Button_OutCsv" runat="server" Text="匯出" OnClick="Button_OutCsv_Click" />
 
                     <table border="1">
                         <tr>
