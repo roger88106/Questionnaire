@@ -112,7 +112,7 @@ namespace Questionnaire.BackPages
             Button_Questionnaire.Enabled = false;
             this.Button_Result.Visible = false;
             this.Button_BackStatisticalData.Visible = false;
-            Button_OK.Text = "下一步";
+            Button_OK.Text = "儲存問卷";
             Button_OK.OnClientClick = "Button_OK_Click";
 
 
@@ -230,7 +230,7 @@ namespace Questionnaire.BackPages
             }
             HttpContext.Current.Session["questionList"] = questionList;
             GetTable(questionList);
-            
+
             DropDownList_Question.SelectedIndex = 0;
             DropDownList_Type.SelectedIndex = 0;
             DropDownList_Type.Enabled = true;
@@ -368,6 +368,19 @@ namespace Questionnaire.BackPages
             Response.Redirect($"BackQuestionnaire.aspx?ID={questionnairesID}");
         }
 
+        protected void Button_Cancle_Click(object sender, EventArgs e)
+        {
+            if (questionnairesID == -1)
+            {
+                Response.Redirect("BackIndex.aspx");
+            }
+            else
+            {
+                questionList = _mgr.GetQuestionList(questionnairesID);
+                HttpContext.Current.Session["questionList"] = questionList;
 
+                GetTable(questionList);
+            }
+        }
     }
 }

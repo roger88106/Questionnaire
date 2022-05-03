@@ -85,21 +85,32 @@ namespace Questionnaire.BackPages
             {
                 questionnairesID = -1;
             }
-            if (!string.IsNullOrEmpty(Request.QueryString["page"]))
-                nowPage = Convert.ToInt32(Request.QueryString["page"]);
-            else
-                nowPage = 1;
+
+
 
             //如果這個ID確實有對應的到的問卷
             if (_Questionnairesmgr.SelectQuestionnaireIDinDatabase(0, questionnairesID))
             {
                 allRespondentList = _mgr.GetRespondentList(questionnairesID);
-                nowPageList = _hlp.GetPageList(allRespondentList, nowPage);
+
 
                 maxPage = _hlp.GetPages(allRespondentList.Count);
+                if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+                {
+                    nowPage = Convert.ToInt32(Request.QueryString["page"]);
 
+                    if (nowPage>maxPage)
+                        nowPage = maxPage;
+                    if (nowPage < 1)
+                        nowPage = 1;
+                    
+                }
+                else
+                    nowPage = 1;
                 Literal_Pager.Text = _hlp.GetLiteral_PagerHtml(nowPage, maxPage, questionnairesID);
 
+
+                nowPageList = _hlp.GetPageList(allRespondentList, nowPage);
                 GetTable(nowPageList);
 
                 if (allRespondentList.Count() == 0)
@@ -129,7 +140,7 @@ namespace Questionnaire.BackPages
                 {
                     Literal_Table.Text += (
                         "<tr>" +
-                            $"<td>{(6-_i)+(maxPage-nowPage-1)*5}</td>" +
+                            $"<td>{(7-_i)+(maxPage-nowPage-1)*5}</td>" +
                             $"<td> {item.Name} </td>" +
                             $"<td> {item.FillTime.ToString("yyyy/MM/dd")} </td>" +
                             $"<td> <a href=\"BackResultsDetail.aspx?ID={item.RespondentID}\">前往</a> </td>" +

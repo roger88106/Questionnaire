@@ -109,6 +109,7 @@ namespace Questionnaire.BackPages
                         Literal_Main.Text += $"<input type=\"text\" disabled=\"disabled\" value=\"{item.answerText}\" />";
                     }
                     Literal_Main.Text += "<br />";
+                    _i++;
                 }
 
             }

@@ -215,5 +215,17 @@ namespace Questionnaire.BackPages
             Response.Redirect($"BackQuestion.aspx?ID={questionnairesID}");
 
         }
+
+        protected void Button_Cancle_Click(object sender, EventArgs e)
+        {
+            if (questionnairesID == -1)
+            {
+                Response.Write("<script language=javascript>history.go(-2);</script>");
+            }
+            else
+            {
+                Response.Redirect($"BackQuestionnaire.aspx?ID={questionnairesID}");
+            }
+        }
     }
 }
