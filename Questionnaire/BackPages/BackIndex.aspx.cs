@@ -23,8 +23,10 @@ namespace Questionnaire.BackPages
         {
             Literal_Table.Text = "";//都先清空，防止狀態保留
 
+
             allQuestionnairesList = _mgr.GetQuestionnaireList(0);//產生保存用的List
             ShowQuestionnairesList = allQuestionnairesList;
+
 
             GetTableData();
         }
@@ -40,10 +42,10 @@ namespace Questionnaire.BackPages
         {
             string Url = "BackIndex.aspx?";
             if (!string.IsNullOrEmpty(TextBox_Search.Text.Trim()))//如果有值，就保存
-                Url += "Keyword="+  TextBox_Search.Text;
+                Url += "Keyword=" + TextBox_Search.Text;
 
             if (!string.IsNullOrEmpty(TextBox_Start.Text))
-                Url += "&StartTime=" + TextBox_Start.Text ;
+                Url += "&StartTime=" + TextBox_Start.Text;
 
             if (!string.IsNullOrEmpty(TextBox_End.Text))
                 Url += "&EndTime=" + TextBox_End.Text;
@@ -53,22 +55,26 @@ namespace Questionnaire.BackPages
 
         protected void Button_Delete_Click(object sender, EventArgs e)
         {
+
             string request = Request.Form["checkBox"];//取得ChechBox勾選的值，形式是 值,值,值
+
             if (!string.IsNullOrEmpty(request))
             {
                 string[] requestArray = request.Split(',');
-            
+
                 foreach (string item in requestArray)
                 {
                     QuestionnairesModel Questionnaires = NowPageQuestionnairesList[Convert.ToInt32(item)];
                     _mgr.DeleteQuestionnaires(Questionnaires.QuestionnaireID);
                 }
             }
-
             Literal_Table.Text = "";//清空防止狀態保留
             allQuestionnairesList = _mgr.GetQuestionnaireList(0);//更新總列表
             GetTableData();
+            //防止F5重複刪除
+            Response.Redirect("BackIndex.aspx");
         }
+
 
         private void GetTable(List<QuestionnairesModel> list)
         {
@@ -111,7 +117,7 @@ namespace Questionnaire.BackPages
         //主要功能
         private void GetTableData()
         {
-            string keyword  = Request.QueryString["Keyword"];
+            string keyword = Request.QueryString["Keyword"];
             string startTime = Request.QueryString["startTime"];
             string endTime = Request.QueryString["endTime"];
 

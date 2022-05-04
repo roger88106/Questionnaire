@@ -39,8 +39,8 @@ namespace Questionnaire.Helpers
 
             foreach (var item in list)
             {
-                if (item.EndTime == null)
-                    questionnaireEnd = DateTime.MinValue;
+                if (!item.EndTime.HasValue)
+                    questionnaireEnd = DateTime.MaxValue;
                 else
                     questionnaireEnd = item.EndTime.Value;
 

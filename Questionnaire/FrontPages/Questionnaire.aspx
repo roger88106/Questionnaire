@@ -32,22 +32,22 @@
                 <tr>
                     <td>姓名</td>
                     <td>
-                        <asp:TextBox ID="TextBox_Name" runat="server">AAA</asp:TextBox></td>
+                        <asp:TextBox ID="TextBox_Name" runat="server"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td>電話號碼</td>
                     <td>
-                        <asp:TextBox ID="TextBox_Phone" runat="server" TextMode="Number">0912345678</asp:TextBox></td>
+                        <asp:TextBox ID="TextBox_Phone" runat="server" TextMode="Number"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td>Email</td>
                     <td>
-                        <asp:TextBox ID="TextBox_Email" runat="server" TextMode="Email">1@3</asp:TextBox></td>
+                        <asp:TextBox ID="TextBox_Email" runat="server" TextMode="Email"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td>年齡</td>
                     <td>
-                        <asp:TextBox ID="TextBox_Age" runat="server" TextMode="Number">12</asp:TextBox></td>
+                        <asp:TextBox ID="TextBox_Age" runat="server" TextMode="Number"></asp:TextBox></td>
                 </tr>
             </table>
             <br />
