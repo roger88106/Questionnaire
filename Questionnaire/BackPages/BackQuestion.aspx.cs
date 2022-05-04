@@ -13,6 +13,7 @@ namespace Questionnaire.BackPages
     {
         int questionnairesID;//讀到對應的ID就是修改模式，讀不到的話把ID轉成-1就是新增模式
         QuestionnairesManager _Questionnairesmgr = new QuestionnairesManager();
+        RespondentManager _RespondentMgr = new RespondentManager();
         QuestionManager _mgr = new QuestionManager();
         CommonlyQuestionManager _commonlyMgr = new CommonlyQuestionManager();
         List<QuestionModel> questionList = new List<QuestionModel>();
@@ -105,6 +106,23 @@ namespace Questionnaire.BackPages
             //如果選項是文字，就不需要填回答的TextBox
             if (DropDownList_Type.SelectedIndex == 0)
                 TextBox_Answer.Enabled = false;
+
+            //如果這個問卷已經被填過，就把修改部分關閉
+            List<RespondentModel> rList = _RespondentMgr.GetRespondentList(questionnairesID);
+            if (rList!=null)
+            {
+                //這邊如果寫在同一個，有可能因為List是NULL導致Count出現ERROR
+                if (rList.Count()>0)
+                {
+                    Button_OK.Enabled = false;
+                    TextBox_Answer.Enabled = false;
+                    TextBox_Question.Enabled = false;
+                    Button_Add.Enabled = false;
+                    CheckBox_Required.Enabled = false;
+                    Button_Delete.Enabled = false;
+                    Label1.Text = "此問卷已經被填寫，不能修改問題內容";
+                }
+            }
         }
 
         private void Mode_New()

@@ -29,6 +29,9 @@ namespace Questionnaire.Managers
                             PhoneNumber=item.PhoneNumber,
                             RespondentID=item.RespondentID
                         };
+                    if (query.ToList().Count == 0)
+                        return new List<RespondentModel>();
+
                     return query.ToList();
                 }
             }
