@@ -109,10 +109,10 @@ namespace Questionnaire.BackPages
 
             //如果這個問卷已經被填過，就把修改部分關閉
             List<RespondentModel> rList = _RespondentMgr.GetRespondentList(questionnairesID);
-            if (rList!=null)
+            if (rList != null)
             {
                 //這邊如果寫在同一個，有可能因為List是NULL導致Count出現ERROR
-                if (rList.Count()>0)
+                if (rList.Count() > 0)
                 {
                     Button_OK.Enabled = false;
                     TextBox_Answer.Enabled = false;
@@ -211,50 +211,64 @@ namespace Questionnaire.BackPages
             if (questionList == null)
                 questionList = new List<QuestionModel>();
 
-            if (Button_Add.Text == "修改")
-            {
-                int _i = 0;
-                foreach (var item in questionList)
-                {
-                    if (editQuestionID == item.QuestionID)
-                    {
-                        questionList[_i].Required = CheckBox_Required.Checked;
-                        questionList[_i].QuestionContent = TextBox_Question.Text;
-                        questionList[_i].QuestionOptions = TextBox_Answer.Text;
-                    }
-                    _i++;
-                }
-                HttpContext.Current.Session["questionList"] = questionList;
-                Button_Add.Text = "新增";
-                TextBox_Answer.Text = "";
-                TextBox_Question.Text = "";
-                DropDownList_Type.SelectedIndex = 0;
-                CheckBox_Required.Checked = false;
-                DropDownList_Type.Enabled = true;//不能調整回答模式，防止已經被回答的問題發生錯誤
-                TextBox_Answer.Enabled = false;
+            string option = RemoveNullOpthion(TextBox_Answer.Text.Trim());
+
+            if (string.IsNullOrEmpty(TextBox_Question.Text.Trim()))
+                Label1.Text = "題目不可為空白";
+            else if (option == "" && (DropDownList_Type.SelectedIndex == 1 || DropDownList_Type.SelectedIndex == 2))
+            {//如果是單或多選，且選項為空
+                Label1.Text = "選項不可為空白";
             }
             else
             {
-                questionList.Add(new QuestionModel
+                //這邊把"修改"這兩個字作為判斷是新增還是修改的條件
+                if (Button_Add.Text == "修改")
                 {
-                    QuestionnairesID = questionnairesID,
-                    QuestionID = Guid.NewGuid(),
-                    QuestionType = DropDownList_Type.SelectedIndex,
-                    QuestionContent = TextBox_Question.Text,
-                    QuestionOptions = TextBox_Answer.Text,
-                    Required = CheckBox_Required.Checked,
-                    QuestionOrder = questionList.Count()
-                });
-            }
-            HttpContext.Current.Session["questionList"] = questionList;
-            GetTable(questionList);
+                    int _i = 0;
+                    foreach (var item in questionList)
+                    {
+                        if (editQuestionID == item.QuestionID)
+                        {
+                            questionList[_i].Required = CheckBox_Required.Checked;
+                            questionList[_i].QuestionContent = TextBox_Question.Text.Trim();
+                            questionList[_i].QuestionOptions = RemoveNullOpthion(TextBox_Answer.Text.Trim());
+                        }
+                        _i++;
+                    }
 
-            DropDownList_Question.SelectedIndex = 0;
-            DropDownList_Type.SelectedIndex = 0;
-            DropDownList_Type.Enabled = true;
-            TextBox_Answer.Text = "";
-            TextBox_Question.Text = "";
-            TextBox_Answer.Enabled = false;
+
+                    HttpContext.Current.Session["questionList"] = questionList;
+                    Button_Add.Text = "新增";
+                    TextBox_Answer.Text = "";
+                    TextBox_Question.Text = "";
+                    DropDownList_Type.SelectedIndex = 0;
+                    CheckBox_Required.Checked = false;
+                    DropDownList_Type.Enabled = true;//不能調整回答模式，防止已經被回答的問題發生錯誤
+                    TextBox_Answer.Enabled = false;
+                }
+                else
+                {
+                    questionList.Add(new QuestionModel
+                    {
+                        QuestionnairesID = questionnairesID,
+                        QuestionID = Guid.NewGuid(),
+                        QuestionType = DropDownList_Type.SelectedIndex,
+                        QuestionContent = TextBox_Question.Text,
+                        QuestionOptions = RemoveNullOpthion(TextBox_Answer.Text.Trim()),
+                        Required = CheckBox_Required.Checked,
+                        QuestionOrder = questionList.Count()
+                    });
+                }
+                HttpContext.Current.Session["questionList"] = questionList;
+                GetTable(questionList);
+
+                DropDownList_Question.SelectedIndex = 0;
+                DropDownList_Type.SelectedIndex = 0;
+                DropDownList_Type.Enabled = true;
+                TextBox_Answer.Text = "";
+                TextBox_Question.Text = "";
+                TextBox_Answer.Enabled = false;
+            }
         }
 
         protected void DropDownList_Type_SelectedIndexChanged(object sender, EventArgs e)
@@ -342,7 +356,7 @@ namespace Questionnaire.BackPages
                     _mgr.UpdateQuestionnaire(questionnairesID, questionList);
 
                     Mode_Revise();
-                    Label1.Text = "問題已處存";
+                    Label1.Text = "問題已儲存";
                 }
             }
         }
@@ -399,6 +413,37 @@ namespace Questionnaire.BackPages
 
                 GetTable(questionList);
             }
+        }
+
+        /// <summary>
+        /// 刪除空白選項
+        /// </summary>
+        /// <param name="option">選項內文</param>
+        /// <returns>刪除空白選項後的選項內文</returns>
+        private string RemoveNullOpthion(string option)
+        {
+            char last = ';';
+            string newOption = "";
+            foreach (var item in option)
+            {
+                //如果連續兩個都是分號，就跳過
+                if (last == ';' && item == ';')
+                {
+
+                }
+                else
+                {
+                    newOption += item;
+                }
+                last = item;
+            }
+
+            if (last == ';')
+            {
+                return newOption.TrimEnd(';');
+            }
+
+            return newOption;
         }
     }
 }

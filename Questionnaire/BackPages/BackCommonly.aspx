@@ -45,5 +45,6 @@
             </td>
         </tr>
     </table>
+    <asp:Label ID="Label1" Text="" runat="server" />
 
 </asp:Content>

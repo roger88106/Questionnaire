@@ -86,8 +86,6 @@ namespace Questionnaire.BackPages
                 questionnairesID = -1;
             }
 
-
-
             //如果這個ID確實有對應的到的問卷
             if (_Questionnairesmgr.SelectQuestionnaireIDinDatabase(0, questionnairesID))
             {
@@ -103,7 +101,6 @@ namespace Questionnaire.BackPages
                         nowPage = maxPage;
                     if (nowPage < 1)
                         nowPage = 1;
-                    
                 }
                 else
                     nowPage = 1;
@@ -114,13 +111,9 @@ namespace Questionnaire.BackPages
                 GetTable(nowPageList);
 
                 if (allRespondentList.Count() == 0)
-                {
                     Button_OutCsv.Enabled = false;
-                }
                 else
-                {
                     Button_OutCsv.Enabled = true;
-                }
             }
             else
             {
@@ -135,18 +128,27 @@ namespace Questionnaire.BackPages
             Literal_Table.Text = "";
             if (list != null)
             {
+                //先反轉
+                //list.Reverse();
+                string htmlText = "";
+
+                int count = allRespondentList.Count();
+
+                
                 int _i = 0;
                 foreach (var item in list)
                 {
-                    Literal_Table.Text += (
+                    htmlText +=
                         "<tr>" +
-                            $"<td>{(7-_i)+(maxPage-nowPage-1)*5}</td>" +
+                            $"<td>{(count - (nowPage-1)*5) - _i}</td>" +
                             $"<td> {item.Name} </td>" +
                             $"<td> {item.FillTime.ToString("yyyy/MM/dd")} </td>" +
                             $"<td> <a href=\"BackResultsDetail.aspx?ID={item.RespondentID}\">前往</a> </td>" +
-                        "</tr> ");
+                        "</tr> ";
                     _i++;
                 }
+
+                Literal_Table.Text = htmlText;
             }
         }
     }

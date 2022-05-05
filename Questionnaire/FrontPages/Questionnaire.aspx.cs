@@ -176,14 +176,14 @@ namespace Questionnaire.FrontPages
                 });
             }
 
-            //判斷輸入的是否完整
+            //判斷基本資料輸入的是否完整
             if (string.IsNullOrEmpty(TextBox_Name.Text) || string.IsNullOrEmpty(TextBox_Phone.Text) ||
                 string.IsNullOrEmpty(TextBox_Email.Text) || string.IsNullOrEmpty(TextBox_Age.Text))
                 Label1.Text = "個人資料請確實填寫";
             else if (TextBox_Phone.Text.Count() != 10)
-            {
                 Label1.Text = "手機號碼格式錯誤";
-            }
+            else if (Convert.ToInt32(TextBox_Age.Text) < 1)
+                Label1.Text = "年齡須大於1歲";
             else if (!required)
                 Label1.Text = "尚有必填題目為填寫";
             else

@@ -149,6 +149,7 @@ namespace Questionnaire.Managers
                 {
                     var Questionnaire = new Questionnaire.ORM.Questionnaire()
                     {
+                        QuestionnaireID = 4000,
                         QuestionnaireContent = questionnaire.QuestionnaireContent,
                         QuestionnaireState = questionnaire.QuestionnaireState,
                         QuestionnaireTital = questionnaire.QuestionnaireTital,

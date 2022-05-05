@@ -79,18 +79,31 @@ namespace Questionnaire.BackPages
                 CommonlyID = 0,
                 QuestionType = DropDownList_Type.SelectedIndex,
                 QuestionContent = TextBox_Question.Text,
-                QuestionOptions = TextBox_Answer.Text
+                QuestionOptions = RemoveNullOpthion(TextBox_Answer.Text.Trim())
             };
             _mgr.InsertCommonly(commonly);
 
-            questionList = _mgr.GetCommonlyList();
-            GetTable();
+            if (string.IsNullOrEmpty(TextBox_Question.Text))
+            {
+                Label1.Text = "問題不能為空";
+            }
+            else if (string.IsNullOrEmpty(RemoveNullOpthion(TextBox_Answer.Text.Trim())))
+            {
+                Label1.Text = "選項不能為空";
 
-            //恢復預設
-            TextBox_Answer.Text = "";
-            TextBox_Question.Text = "";
-            DropDownList_Type.SelectedIndex = 0;
-            TextBox_Answer.Enabled = false;
+            }
+            else
+            {
+                questionList = _mgr.GetCommonlyList();
+                GetTable();
+
+                //恢復預設
+                TextBox_Answer.Text = "";
+                TextBox_Question.Text = "";
+                DropDownList_Type.SelectedIndex = 0;
+                TextBox_Answer.Enabled = false;
+            }
+
         }
 
         protected void DropDownList_Type_SelectedIndexChanged(object sender, EventArgs e)
@@ -102,6 +115,37 @@ namespace Questionnaire.BackPages
             }
             else
                 TextBox_Answer.Enabled = true;
+        }
+
+        /// <summary>
+        /// 刪除空白選項
+        /// </summary>
+        /// <param name="option">選項內文</param>
+        /// <returns>刪除空白選項後的選項內文</returns>
+        private string RemoveNullOpthion(string option)
+        {
+            char last = ';';
+            string newOption = "";
+            foreach (var item in option)
+            {
+                //如果連續兩個都是分號，就跳過
+                if (last == ';' && item == ';')
+                {
+
+                }
+                else
+                {
+                    newOption += item;
+                }
+                last = item;
+            }
+
+            if (last == ';')
+            {
+                return newOption.TrimEnd(';');
+            }
+
+            return newOption;
         }
     }
 }
