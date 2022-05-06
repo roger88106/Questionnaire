@@ -88,7 +88,7 @@ namespace Questionnaire.BackPages
                             TextBox_Question.Text = item.QuestionContent;
                             DropDownList_Type.SelectedIndex = item.QuestionType;
                             CheckBox_Required.Checked = item.Required;
-                            DropDownList_Type.Enabled = false;//不能調整回答模式，防止已經被回答的問題發生錯誤
+                            //DropDownList_Type.Enabled = false;//不能調整回答模式，防止已經被回答的問題發生錯誤
                             if (!(item.QuestionType == 1 || item.QuestionType == 2))
                             {
                                 TextBox_Answer.Enabled = false;
@@ -232,6 +232,7 @@ namespace Questionnaire.BackPages
                             questionList[_i].Required = CheckBox_Required.Checked;
                             questionList[_i].QuestionContent = TextBox_Question.Text.Trim();
                             questionList[_i].QuestionOptions = RemoveNullOpthion(TextBox_Answer.Text.Trim());
+                            questionList[_i].QuestionType = DropDownList_Type.SelectedIndex;
                         }
                         _i++;
                     }
@@ -356,6 +357,12 @@ namespace Questionnaire.BackPages
                     _mgr.UpdateQuestionnaire(questionnairesID, questionList);
 
                     Mode_Revise();
+
+                    TextBox_Answer.Text = "";
+                    TextBox_Question.Text = "";
+                    DropDownList_Question.SelectedIndex = 0;
+                    DropDownList_Type.SelectedIndex = 0;
+                    TextBox_Answer.Enabled = false;
                     Label1.Text = "問題已儲存";
                 }
             }

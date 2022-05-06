@@ -74,26 +74,25 @@ namespace Questionnaire.BackPages
 
         protected void Button_Add_Click(object sender, EventArgs e)
         {
-            CommonlyQuestionModel commonly = new CommonlyQuestionModel()
-            {
-                CommonlyID = 0,
-                QuestionType = DropDownList_Type.SelectedIndex,
-                QuestionContent = TextBox_Question.Text,
-                QuestionOptions = RemoveNullOpthion(TextBox_Answer.Text.Trim())
-            };
-            _mgr.InsertCommonly(commonly);
-
             if (string.IsNullOrEmpty(TextBox_Question.Text))
             {
                 Label1.Text = "問題不能為空";
             }
-            else if (string.IsNullOrEmpty(RemoveNullOpthion(TextBox_Answer.Text.Trim())))
+            else if (string.IsNullOrEmpty(RemoveNullOpthion(TextBox_Answer.Text.Trim())) && (DropDownList_Type.SelectedIndex == 1 || DropDownList_Type.SelectedIndex == 2))
             {
                 Label1.Text = "選項不能為空";
-
             }
             else
             {
+                CommonlyQuestionModel commonly = new CommonlyQuestionModel()
+                {
+                    CommonlyID = 0,
+                    QuestionType = DropDownList_Type.SelectedIndex,
+                    QuestionContent = TextBox_Question.Text,
+                    QuestionOptions = RemoveNullOpthion(TextBox_Answer.Text.Trim())
+                };
+                _mgr.InsertCommonly(commonly);
+
                 questionList = _mgr.GetCommonlyList();
                 GetTable();
 

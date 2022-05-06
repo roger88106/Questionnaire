@@ -79,7 +79,7 @@
                 <asp:Button ID="Button_Cancle" runat="server" Text="取消" OnClick="Button_Cancle_Click" />
             </td>
             <td width="33%">
-                <asp:Button ID="Button_OK" runat="server" Text="修改" OnClick="Button_OK_Click"/>
+                <asp:Button ID="Button_OK" runat="server" Text="確認" OnClick="Button_OK_Click"/>
             </td>
         </tr>
     </table>
