@@ -115,11 +115,14 @@ namespace Questionnaire.BackPages
                 if (rList.Count() > 0)
                 {
                     Button_OK.Enabled = false;
+                    Button_Cancle.Enabled = false;
                     TextBox_Answer.Enabled = false;
                     TextBox_Question.Enabled = false;
                     Button_Add.Enabled = false;
                     CheckBox_Required.Enabled = false;
                     Button_Delete.Enabled = false;
+                    DropDownList_Type.Enabled = false;
+                    DropDownList_Question.Enabled = false;
                     Label1.Text = "此問卷已經被填寫，不能修改問題內容";
                 }
             }
