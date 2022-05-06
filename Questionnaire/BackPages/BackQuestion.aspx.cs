@@ -386,7 +386,7 @@ namespace Questionnaire.BackPages
                     questionList.RemoveAt(Convert.ToInt32(item));
                 }
             }
-            HttpContext.Current.Session["QuestionnairesData"] = questionList;
+            HttpContext.Current.Session["questionList"] = questionList;
             GetTable(questionList);
         }
 
