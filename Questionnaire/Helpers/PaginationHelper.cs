@@ -31,7 +31,7 @@ namespace Questionnaire.Helpers
                 }
                 catch
                 {
-                    //這裡索引可能會超出範圍，但超出就無視就好
+                    //這裡索引可能會超出範圍，但超出就無視就好ㄌ
                 }
             }
 
@@ -132,8 +132,23 @@ namespace Questionnaire.Helpers
             if (!string.IsNullOrEmpty(endTime))
                 queryString_Sencer += $"EndTime={endTime}&";
 
-            string start = $"<a href=\"?{queryString_Sencer}page={1}\"><<</a> &nbsp <a href = \"?{queryString_Sencer}page={nowPage - 1}\" ><</a> &nbsp";
-            string end = $"<a href=\"?{queryString_Sencer}page={nowPage+1}\"> > </a> &nbsp <a href=\"?{queryString_Sencer}page={maxPage}\">>></a>";
+            string start, end;
+            if (nowPage <= 1)
+            {
+                start = $"<<&nbsp<&nbsp";
+                end = $"<a href=\"?{queryString_Sencer}page={nowPage + 1}\"> > </a> &nbsp <a href=\"?{queryString_Sencer}page={maxPage}\">>></a>";
+            }
+            else if (nowPage >= maxPage)
+            {
+                start = $"<a href=\"?{queryString_Sencer}page={1}\"><<</a> &nbsp <a href = \"?{queryString_Sencer}page={nowPage - 1}\" ><</a> &nbsp";
+                end = $">&nbsp>>";
+            }
+            else
+            {
+                start = $"<a href=\"?{queryString_Sencer}page={1}\"><<</a> &nbsp <a href = \"?{queryString_Sencer}page={nowPage - 1}\" ><</a> &nbsp";
+                end = $"<a href=\"?{queryString_Sencer}page={nowPage + 1}\"> > </a> &nbsp <a href=\"?{queryString_Sencer}page={maxPage}\">>></a>";
+            }
+
 
             string mid = "";
 

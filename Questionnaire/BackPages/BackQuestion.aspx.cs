@@ -69,64 +69,55 @@ namespace Questionnaire.BackPages
                 {
                     //有的話就進入編輯模式
                     Mode_Revise();
+
+                    //如果選項是文字，就不需要填回答的TextBox
+                    if (DropDownList_Type.SelectedIndex == 0)
+                        TextBox_Answer.Enabled = false;
                 }
                 else
                 {
                     questionnairesID = -1;
                     //沒有的話就進入新增模式
                     Mode_New();
-                }
+                    EditMode();
 
-                //如果Edit有值的話才做
-                if (Guid.TryParse(Request.QueryString["Edit"], out editQuestionID))
+                    //如果選項是文字，就不需要填回答的TextBox
+                    if (DropDownList_Type.SelectedIndex == 0)
+                        TextBox_Answer.Enabled = false;
+                } 
+            }
+        }
+
+        /// <summary>
+        /// 判斷是否為Edit
+        /// </summary>
+        private void EditMode()
+        {
+            //如果Edit有值的話才做
+            if (Guid.TryParse(Request.QueryString["Edit"], out editQuestionID))
+            {
+                foreach (var item in questionList)
                 {
-                    foreach (var item in questionList)
+                    if (item.QuestionID == editQuestionID)
                     {
-                        if (item.QuestionID == editQuestionID)
+                        TextBox_Answer.Text = item.QuestionOptions;
+                        TextBox_Question.Text = item.QuestionContent;
+                        DropDownList_Type.SelectedIndex = item.QuestionType;
+                        CheckBox_Required.Checked = item.Required;
+                        if (!(item.QuestionType == 1 || item.QuestionType == 2))
                         {
-                            TextBox_Answer.Text = item.QuestionOptions;
-                            TextBox_Question.Text = item.QuestionContent;
-                            DropDownList_Type.SelectedIndex = item.QuestionType;
-                            CheckBox_Required.Checked = item.Required;
-                            //DropDownList_Type.Enabled = false;//不能調整回答模式，防止已經被回答的問題發生錯誤
-                            if (!(item.QuestionType == 1 || item.QuestionType == 2))
-                            {
-                                TextBox_Answer.Enabled = false;
-                            }
-                            else
-                            {
-                                TextBox_Answer.Enabled = true;
-                            }
-                            Button_Add.Text = "修改";
+                            TextBox_Answer.Enabled = false;
                         }
+                        else
+                        {
+                            TextBox_Answer.Enabled = true;
+                        }
+                        Button_Add.Text = "修改";
                     }
                 }
             }
-
-            //如果選項是文字，就不需要填回答的TextBox
-            if (DropDownList_Type.SelectedIndex == 0)
-                TextBox_Answer.Enabled = false;
-
-            //如果這個問卷已經被填過，就把修改部分關閉
-            List<RespondentModel> rList = _RespondentMgr.GetRespondentList(questionnairesID);
-            if (rList != null)
-            {
-                //這邊如果寫在同一個，有可能因為List是NULL導致Count出現ERROR
-                if (rList.Count() > 0)
-                {
-                    Button_OK.Enabled = false;
-                    Button_Cancle.Enabled = false;
-                    TextBox_Answer.Enabled = false;
-                    TextBox_Question.Enabled = false;
-                    Button_Add.Enabled = false;
-                    CheckBox_Required.Enabled = false;
-                    Button_Delete.Enabled = false;
-                    DropDownList_Type.Enabled = false;
-                    DropDownList_Question.Enabled = false;
-                    Label1.Text = "此問卷已經被填寫，不能修改問題內容";
-                }
-            }
         }
+
 
         private void Mode_New()
         {
@@ -170,6 +161,28 @@ namespace Questionnaire.BackPages
             }
 
             GetTable(questionList);
+
+            EditMode();
+
+            //如果這個問卷已經被填過，就把修改部分關閉
+            List<RespondentModel> rList = _RespondentMgr.GetRespondentList(questionnairesID);
+            if (rList != null)
+            {
+                //這邊如果寫在同一個，有可能因為List是NULL導致Count出現ERROR
+                if (rList.Count() > 0)
+                {
+                    Button_OK.Enabled = false;
+                    Button_Cancle.Enabled = false;
+                    TextBox_Answer.Enabled = false;
+                    TextBox_Question.Enabled = false;
+                    Button_Add.Enabled = false;
+                    CheckBox_Required.Enabled = false;
+                    Button_Delete.Enabled = false;
+                    DropDownList_Type.Enabled = false;
+                    DropDownList_Question.Enabled = false;
+                    Label1.Text = "此問卷已經被填寫，不能修改問題內容";
+                }
+            }
         }
 
         private void GetTable(List<QuestionModel> list)

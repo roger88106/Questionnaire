@@ -5,6 +5,9 @@ using System.Web;
 
 namespace Questionnaire.Models
 {
+    /// <summary>
+    /// Cs
+    /// </summary>
     public class CsvModel
     {
         public string Name;

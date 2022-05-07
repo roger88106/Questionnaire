@@ -17,14 +17,25 @@ namespace Questionnaire.BackPages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //嘗試讀取ID         
             try
-            {//排除掉ID被竄改成不是整數的情形
+            {//排除掉ID為空或被竄改成不是整數的情形
                 questionnairesID = Convert.ToInt32(Request.QueryString["ID"]);
             }
             catch (Exception)
             {
                 questionnairesID = -1;
+            }
+
+            //判斷此ID是否有對應的問卷
+            bool hasThisQuestionnairesID = _mgr.SelectQuestionnaireIDinDatabase(0, questionnairesID);
+            if (questionnairesID >= 0 && hasThisQuestionnairesID)
+            {
+                //ID對就無視就好
+            }
+            else
+            {
+                questionnairesID = -1;
+                //不對就調成-1
             }
 
             if (!IsPostBack)
@@ -38,28 +49,16 @@ namespace Questionnaire.BackPages
                 //自己頁面的按鈕要關掉
                 Button_Questionnaire.Enabled = false;
 
-                //如果讀取到QueryString的ID值，且此ID是合法且找的到資料的話才進入編輯模式           
-                try
-                {//排除掉ID為空或被竄改成不是整數的情形
-                    questionnairesID = Convert.ToInt32(Request.QueryString["ID"]);
-                }
-                catch (Exception)
-                {
-                    questionnairesID = -1;
-                }
-
                 //判斷此ID是否有對應的問卷
-                bool hasThisQuestionnairesID = _mgr.SelectQuestionnaireIDinDatabase(0, questionnairesID);
-                if (questionnairesID >= 0 && hasThisQuestionnairesID)
+                if (questionnairesID ==-1)
                 {
-                    //有的話就進入編輯模式
-                    Mode_Revise();
+                    Mode_New();
                 }
                 else
                 {
-                    questionnairesID = -1;
-                    //沒有的話就進入新增模式
-                    Mode_New();
+                    //有的話就進入編輯模式
+                    Mode_Revise();
+
                 }
             }
             

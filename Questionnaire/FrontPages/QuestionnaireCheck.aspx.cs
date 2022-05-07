@@ -84,54 +84,56 @@ namespace Questionnaire.FrontPages
         }
         protected void Button_OK_Click(object sender, EventArgs e)
         {
-            try
+            if (Button_OK.Enabled == true)
             {
-                using (ContextModel contextModel = new ContextModel())
+                try
                 {
-                    //把respondent變數的內容寫進資料庫
-                    var ORM_Respondent = new Respondent
+                    using (ContextModel contextModel = new ContextModel())
                     {
-                        Age = respondent.Age,
-                        Email = respondent.Email,
-                        FillTime = respondent.FillTime,
-                        Name = respondent.Name,
-                        PhoneNumber = respondent.PhoneNumber,
-                        QuestionnairesID = respondent.QuestionnairesID,
-                        RespondentID = respondent.RespondentID
-                    };
-                    contextModel.Respondents.Add(ORM_Respondent);
-
-
-                    //把answersList變數的內容都寫進資料庫
-                    Answer ORM_Answers;
-                    foreach (var item in answersList)
-                    {
-                        ORM_Answers = new Answer
+                        //把respondent變數的內容寫進資料庫
+                        var ORM_Respondent = new Respondent
                         {
-                            Answer1 = item.Answer,
-                            AnswerID = item.AnswerID,
-                            QuestionID = item.QuestionID,
-                            QuestionnaireID = item.QuestionnaireID,
-                            RespondentID = item.RespondentID
+                            Age = respondent.Age,
+                            Email = respondent.Email,
+                            FillTime = respondent.FillTime,
+                            Name = respondent.Name,
+                            PhoneNumber = respondent.PhoneNumber,
+                            QuestionnairesID = respondent.QuestionnairesID,
+                            RespondentID = respondent.RespondentID
                         };
-                        contextModel.Answers.Add(ORM_Answers);
+                        contextModel.Respondents.Add(ORM_Respondent);
+
+
+                        //把answersList變數的內容都寫進資料庫
+                        Answer ORM_Answers;
+                        foreach (var item in answersList)
+                        {
+                            ORM_Answers = new Answer
+                            {
+                                Answer1 = item.Answer,
+                                AnswerID = item.AnswerID,
+                                QuestionID = item.QuestionID,
+                                QuestionnaireID = item.QuestionnaireID,
+                                RespondentID = item.RespondentID
+                            };
+                            contextModel.Answers.Add(ORM_Answers);
+                        }
+
+                        contextModel.SaveChanges();
+
+
+                        //跳轉前先清除剛剛填寫的資料
+                        Session.Remove("Questions_Respondent");
+                        Session.Remove("Questions_AnswerList");
+                        //跳回index
+                        Response.Redirect("FrontIndex.aspx");
                     }
-
-                    contextModel.SaveChanges();
-
-
-                    //跳轉前先清除剛剛填寫的資料
-                    Session.Remove("Questions_Respondent");
-                    Session.Remove("Questions_AnswerList");
-                    //跳回index
-                    Response.Redirect("FrontIndex.aspx");
+                }
+                catch
+                {
+                    Label1.Text = "資料儲存錯誤，請再確認一次您的資料";
                 }
             }
-            catch
-            {
-                Label1.Text = "資料儲存錯誤，請再確認一次您的資料";
-            }
-
         }
     }
 }
