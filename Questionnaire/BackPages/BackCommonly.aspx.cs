@@ -42,7 +42,7 @@ namespace Questionnaire.BackPages
                         type = "文字方塊";
 
                     Literal_QuestionTable.Text += $"<tr>" +
-                        $"<td><input type=\"checkbox\" name=\"checkBox_Delete\" value = \"{_i}\" /></td>" +
+                        $"<td><input type=\"checkbox\" name=\"checkBox_Delete\" value = \"{_i}\"  /></td>" +
                         $"<td>{_i + 1}</td>" +
                         $"<td>{item.QuestionContent}</td>" +
                         $"<td>{type}</td>" +
@@ -70,6 +70,7 @@ namespace Questionnaire.BackPages
             }
             questionList = _mgr.GetCommonlyList();
             GetTable();
+            Response.Redirect("BackCommonly.aspx");
         }
 
         protected void Button_Add_Click(object sender, EventArgs e)
@@ -92,6 +93,7 @@ namespace Questionnaire.BackPages
                     QuestionOptions = RemoveNullOpthion(TextBox_Answer.Text.Trim())
                 };
                 _mgr.InsertCommonly(commonly);
+
 
                 questionList = _mgr.GetCommonlyList();
                 GetTable();

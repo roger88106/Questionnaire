@@ -20,17 +20,12 @@ namespace Questionnaire.Helpers
         {
             List<QuestionnairesModel> resultList = new List<QuestionnairesModel>();
 
-            //如果start跟end Time有輸入值，就轉成DateTime儲存，否則儲存成最大跟最小值
+            //如果start跟end Time有可轉換成DateTime的輸入值就使用，否則儲存成最大跟最小值
             DateTime start, end;
-            if (string.IsNullOrEmpty(startTime))
+            if (!DateTime.TryParse(startTime, out start))
                 start = DateTime.MinValue;
-            else
-                start = Convert.ToDateTime(startTime);
-
-            if (string.IsNullOrEmpty(endTime))
+            if (!DateTime.TryParse(endTime,out end))
                 end = DateTime.MaxValue;
-            else
-                end = Convert.ToDateTime(endTime);
 
             if (keyword == null)
                 keyword = "";

@@ -55,6 +55,23 @@ namespace Questionnaire.BackPages
 
         protected void Button_Delete_Click(object sender, EventArgs e)
         {
+            string page = Request.QueryString["page"];
+            string keyword = Request.QueryString["Keyword"];
+            string startTime = Request.QueryString["StartTime"];
+            string endTime = Request.QueryString["EndTime"];
+            string queryString = "";
+            if (string.IsNullOrEmpty(page))
+                queryString += "page=1";
+            else
+                queryString += "page=" + page;
+
+            if (!string.IsNullOrEmpty(keyword))
+                queryString += "&Keyword=" + keyword;
+            if (!string.IsNullOrEmpty(startTime))
+                queryString += "&StartTime=" + startTime;
+            if (!string.IsNullOrEmpty(endTime))
+                queryString += "&EndTime=" + endTime;
+
 
             string request = Request.Form["checkBox"];//取得ChechBox勾選的值，形式是 值,值,值
 
@@ -72,7 +89,7 @@ namespace Questionnaire.BackPages
             allQuestionnairesList = _mgr.GetQuestionnaireList(0);//更新總列表
             GetTableData();
             //防止F5重複刪除
-            Response.Redirect("BackIndex.aspx");
+            Response.Redirect("BackIndex.aspx?" + queryString);
         }
 
 

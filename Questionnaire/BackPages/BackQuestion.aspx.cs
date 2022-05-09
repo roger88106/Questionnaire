@@ -34,7 +34,6 @@ namespace Questionnaire.BackPages
                 questionnairesID = -1;
             }
 
-
             if (IsPostBack)
             {
                 bool hasThisQuestionnairesID = _Questionnairesmgr.SelectQuestionnaireIDinDatabase(0, questionnairesID);
@@ -84,8 +83,9 @@ namespace Questionnaire.BackPages
                     //如果選項是文字，就不需要填回答的TextBox
                     if (DropDownList_Type.SelectedIndex == 0)
                         TextBox_Answer.Enabled = false;
-                } 
+                }
             }
+            HttpContext.Current.Session["isPageLoad"] = true;
         }
 
         /// <summary>
@@ -116,6 +116,7 @@ namespace Questionnaire.BackPages
                     }
                 }
             }
+
         }
 
 
@@ -214,7 +215,7 @@ namespace Questionnaire.BackPages
                         $"<td>{_i + 1}</td>" +
                         $"<td>{item.QuestionContent}</td>" +
                         $"<td>{type}</td>" +
-                        $"<td><input type=\"checkbox\" name=\"checkBox_Required\" value = \"{_i}\" {required} /></td>" +
+                        $"<td><input type=\"checkbox\" name=\"checkBox_Required\" value = \"{_i}\" {required} disabled /></td>" +
                         $"<td><a href=\"?{textID}Edit={item.QuestionID}\">編輯</a></td>" +
                         $"</tr>";
                     _i += 1;
@@ -255,7 +256,7 @@ namespace Questionnaire.BackPages
 
 
                     HttpContext.Current.Session["questionList"] = questionList;
-                    Button_Add.Text = "新增";
+                    Button_Add.Text = "加入";
                     TextBox_Answer.Text = "";
                     TextBox_Question.Text = "";
                     DropDownList_Type.SelectedIndex = 0;
@@ -379,6 +380,8 @@ namespace Questionnaire.BackPages
                     DropDownList_Question.SelectedIndex = 0;
                     DropDownList_Type.SelectedIndex = 0;
                     TextBox_Answer.Enabled = false;
+                    CheckBox_Required.Checked = false;
+                    Button_Add.Text = "加入";
                     Label1.Text = "問題已儲存";
                 }
             }
@@ -387,7 +390,6 @@ namespace Questionnaire.BackPages
         protected void Button_Delete_Click(object sender, EventArgs e)
         {
             string[] poshion;
-
             if (!string.IsNullOrEmpty(Request.Form["checkBox_Delete"]))
             {
                 poshion = Request.Form["checkBox_Delete"].Split(',');
@@ -403,16 +405,9 @@ namespace Questionnaire.BackPages
                 }
                 catch (Exception ex)
                 {
-                    if (ex.Message == "索引超出範圍。必須為非負數且小於集合的大小。\r\n參數名稱: index")
-                    {
-
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (ex.Message == "索引超出範圍。必須為非負數且小於集合的大小。\r\n參數名稱: index") { }
+                    else { throw; }
                 }
-
             }
             HttpContext.Current.Session["questionList"] = questionList;
             GetTable(questionList);

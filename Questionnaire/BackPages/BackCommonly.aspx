@@ -11,7 +11,7 @@
                         <td>問題</td>
                         <td>
                             <asp:TextBox ID="TextBox_Question" runat="server"></asp:TextBox>
-                            <asp:DropDownList ID="DropDownList_Type" runat="server" OnSelectedIndexChanged="DropDownList_Type_SelectedIndexChanged" AutoPostBack="true">
+                            <asp:DropDownList ID="DropDownList_Type" runat="server" OnSelectedIndexChanged="DropDownList_Type_SelectedIndexChanged" AutoPostBack="true" >
                                 <asp:ListItem>文字</asp:ListItem>
                                 <asp:ListItem>單選</asp:ListItem>
                                 <asp:ListItem>複選</asp:ListItem>
