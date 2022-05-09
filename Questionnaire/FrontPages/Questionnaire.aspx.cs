@@ -41,7 +41,7 @@ namespace Questionnaire.FrontPages
                 //顯示起始結束時間
                 Label_Time.Text = questionnaire.StartTime.ToString("yyyy/MM/dd");
                 if (questionnaire.EndTime.HasValue)
-                    Label_Time.Text += " ~ "+questionnaire.EndTime.Value.ToString("yyyy/MM/dd");
+                    Label_Time.Text += " ~ " + questionnaire.EndTime.Value.ToString("yyyy/MM/dd");
 
                 //判斷是否是投票中的問卷，不是的話就關掉送出功能
                 DateTime end;
@@ -75,7 +75,7 @@ namespace Questionnaire.FrontPages
                     if (item.Required)
                         requiredString = "(必填)";
 
-                    questionsHtml += $"<p>{_i+1}. {item.QuestionContent.Trim()}{requiredString}</p>"; //題目的HTML
+                    questionsHtml += $"<p>{_i + 1}. {item.QuestionContent.Trim()}{requiredString}</p>"; //題目的HTML
 
                     if (item.QuestionType == 1 || item.QuestionType == 2) //單、複選
                     {
@@ -113,69 +113,6 @@ namespace Questionnaire.FrontPages
 
         protected void Button_OK_Click(object sender, EventArgs e)
         {
-            //填答人個資
-            Guid RespondentID = Guid.NewGuid();
-            RespondentModel respondent = new RespondentModel
-            {
-                RespondentID = RespondentID,
-                QuestionnairesID = questionnairesID,
-                Name = TextBox_Name.Text,
-                PhoneNumber = TextBox_Phone.Text,
-                Email = TextBox_Email.Text,
-                Age = Convert.ToInt32(TextBox_Age.Text),
-                FillTime = DateTime.Now
-            };
-
-            //判斷問卷填寫狀況，並做成方便儲存的資料結構
-            bool required = true;//必填是否都有完成
-            List<AnswerModel> answerList = new List<AnswerModel>();
-            for (int i = 0; i < questionCount; i++)
-            {
-                string _answer = "";
-                var item = questionList[i];
-                var value = Request.Form.GetValues($"Questions_{i}");
-
-                if (value == null)
-                {
-                    if (item.Required)//如果這題是必填
-                        required = false;//有必填為空
-                    else
-                        _answer = "";//不是必填且沒填，給他空字串
-                }
-                //需要先判斷過是否為Null才能判斷是否為空字串，不然 value[0] 的地方會Error
-                else if (string.IsNullOrEmpty(value[0].Trim()))
-                {
-                    if (item.Required)
-                        required = false;
-                    else
-                        _answer = "";
-                }
-                else
-                {
-                    if (item.QuestionType == 1 || item.QuestionType == 2) //單、複選的情形
-                    {
-
-                        string[] _answerArray = Request.Form.GetValues($"Questions_{i}");
-                        foreach (var _answerItem in _answerArray)
-                        {
-                            _answer += _answerItem + ",";
-                        }
-                        _answer = _answer.TrimEnd(',');
-                    }
-                    else//文字方塊的情形
-                        _answer = Request.Form[$"Questions_{i}"].Trim();
-                }
-
-                answerList.Add(new AnswerModel
-                {
-                    AnswerID = Guid.NewGuid(),
-                    QuestionID = item.QuestionID,
-                    QuestionnaireID = questionnairesID,
-                    RespondentID = RespondentID,
-                    Answer = _answer
-                });
-            }
-
             //判斷基本資料輸入的是否完整
             if (string.IsNullOrEmpty(TextBox_Name.Text) || string.IsNullOrEmpty(TextBox_Phone.Text) ||
                 string.IsNullOrEmpty(TextBox_Email.Text) || string.IsNullOrEmpty(TextBox_Age.Text))
@@ -184,14 +121,80 @@ namespace Questionnaire.FrontPages
                 Label1.Text = "手機號碼格式錯誤";
             else if (Convert.ToInt32(TextBox_Age.Text) < 1)
                 Label1.Text = "年齡須大於1歲";
-            else if (!required)
-                Label1.Text = "尚有必填題目為填寫";
             else
             {
-                //確定沒問題，儲存進Session並跳轉到確認頁
-                HttpContext.Current.Session["Questions_Respondent"] = respondent;
-                HttpContext.Current.Session["Questions_AnswerList"] = answerList;
-                Response.Redirect($"QuestionnaireCheck.aspx?ID={questionnairesID}");
+
+                //填答人個資
+                Guid RespondentID = Guid.NewGuid();
+                RespondentModel respondent = new RespondentModel
+                {
+                    RespondentID = RespondentID,
+                    QuestionnairesID = questionnairesID,
+                    Name = TextBox_Name.Text,
+                    PhoneNumber = TextBox_Phone.Text,
+                    Email = TextBox_Email.Text,
+                    Age = Convert.ToInt32(TextBox_Age.Text),
+                    FillTime = DateTime.Now
+                };
+
+                //判斷問卷填寫狀況，並做成方便儲存的資料結構
+                bool required = true;//必填是否都有完成
+                List<AnswerModel> answerList = new List<AnswerModel>();
+                for (int i = 0; i < questionCount; i++)
+                {
+                    string _answer = "";
+                    var item = questionList[i];
+                    var value = Request.Form.GetValues($"Questions_{i}");
+
+                    if (value == null)
+                    {
+                        if (item.Required)//如果這題是必填
+                            required = false;//有必填為空
+                        else
+                            _answer = "";//不是必填且沒填，給他空字串
+                    }
+                    //需要先判斷過是否為Null才能判斷是否為空字串，不然 value[0] 的地方會Error
+                    else if (string.IsNullOrEmpty(value[0].Trim()))
+                    {
+                        if (item.Required)
+                            required = false;
+                        else
+                            _answer = "";
+                    }
+                    else
+                    {
+                        if (item.QuestionType == 1 || item.QuestionType == 2) //單、複選的情形
+                        {
+
+                            string[] _answerArray = Request.Form.GetValues($"Questions_{i}");
+                            foreach (var _answerItem in _answerArray)
+                            {
+                                _answer += _answerItem + ",";
+                            }
+                            _answer = _answer.TrimEnd(',');
+                        }
+                        else//文字方塊的情形
+                            _answer = Request.Form[$"Questions_{i}"].Trim();
+                    }
+
+                    answerList.Add(new AnswerModel
+                    {
+                        AnswerID = Guid.NewGuid(),
+                        QuestionID = item.QuestionID,
+                        QuestionnaireID = questionnairesID,
+                        RespondentID = RespondentID,
+                        Answer = _answer
+                    });
+                }
+                if (!required)
+                    Label1.Text = "尚有必填題目為填寫";
+                else
+                {
+                    //確定沒問題，儲存進Session並跳轉到確認頁
+                    HttpContext.Current.Session["Questions_Respondent"] = respondent;
+                    HttpContext.Current.Session["Questions_AnswerList"] = answerList;
+                    Response.Redirect($"QuestionnaireCheck.aspx?ID={questionnairesID}");
+                }
             }
         }
 

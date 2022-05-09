@@ -74,7 +74,8 @@ namespace Questionnaire.Helpers
         //製作分頁Literal用的HTML字串
         public string GetLiteral_PagerHtml(int nowPage, int maxPage)
         {
-
+            if (maxPage == 0)
+                return "<< &nbsp< &nbsp1 &nbsp> &nbsp>>";
 
             string start = $"<a href=\"?page={1}\"><<</a> &nbsp <a href = \"?page={nowPage - 1}\" ><</a> &nbsp";
             string end = $"<a href=\"?page={nowPage + 1}\"> > </a> &nbsp <a href=\"?page={maxPage}\">>></a>";
@@ -124,6 +125,10 @@ namespace Questionnaire.Helpers
         //製作分頁Literal用的HTML字串(帶QueryString查詢參數版)
         public string GetLiteral_PagerHtml(int nowPage, int maxPage, string keyword,string startTime, string endTime)
         {
+            if (maxPage == 0)
+                return "<< &nbsp< &nbsp1 &nbsp> &nbsp>>";
+
+
             string queryString_Sencer="";
             if (!string.IsNullOrEmpty(keyword))
                 queryString_Sencer += $"Keyword={keyword}&";
@@ -195,7 +200,8 @@ namespace Questionnaire.Helpers
         //製作分頁Literal用的HTML字串(帶QueryString ID版)
         public string GetLiteral_PagerHtml(int nowPage, int maxPage ,int ID)
         {
-
+            if (maxPage == 0)
+                return "<< &nbsp< &nbsp1 &nbsp> &nbsp>>";
 
             string start = $"<a href=\"?ID={ID}&page={1}\"><<</a> &nbsp <a href = \"?ID={ID}&page={nowPage - 1}\" ><</a> &nbsp";
             string end = $"<a href=\"?ID={ID}&page={nowPage + 1}\"> > </a> &nbsp <a href=\"?ID={ID}&page={maxPage}\">>></a>";
