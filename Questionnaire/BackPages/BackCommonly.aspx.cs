@@ -42,7 +42,7 @@ namespace Questionnaire.BackPages
                         type = "文字方塊";
 
                     Literal_QuestionTable.Text += $"<tr>" +
-                        $"<td><input type=\"checkbox\" name=\"checkBox_Delete\" value = \"{_i}\"  /></td>" +
+                        $"<td><input type=\"checkbox\" name=\"checkBox_Delete\" value = \"{item.CommonlyID}\"  /></td>" +
                         $"<td>{_i + 1}</td>" +
                         $"<td>{item.QuestionContent}</td>" +
                         $"<td>{type}</td>" +
@@ -56,21 +56,30 @@ namespace Questionnaire.BackPages
         protected void Button_Delete_Click(object sender, EventArgs e)
         {
             List<int> IDs = new List<int>();
+            //if (!string.IsNullOrEmpty(Request.Form["checkBox_Delete"]))
+            //{
+            //    string[] delete = Request.Form["checkBox_Delete"].Split(',');
+            //    foreach (var item in delete)
+            //    {
+            //        IDs.Add(questionList[Convert.ToInt32(item)].CommonlyID);
+            //    }
+            //}
             if (!string.IsNullOrEmpty(Request.Form["checkBox_Delete"]))
             {
                 string[] delete = Request.Form["checkBox_Delete"].Split(',');
                 foreach (var item in delete)
                 {
-                    IDs.Add(questionList[Convert.ToInt32(item)].CommonlyID);
+                    IDs.Add(Convert.ToInt32(item));
                 }
             }
+
             if (IDs.Count() > 0)
             {
                 _mgr.DeleteCommonly(IDs);
             }
             questionList = _mgr.GetCommonlyList();
             GetTable();
-            Response.Redirect("BackCommonly.aspx");
+            //Response.Redirect("BackCommonly.aspx");
         }
 
         protected void Button_Add_Click(object sender, EventArgs e)
@@ -111,7 +120,7 @@ namespace Questionnaire.BackPages
         protected void DropDownList_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DropDownList_Type.SelectedIndex == 0)
-            { 
+            {
                 TextBox_Answer.Enabled = false;
                 TextBox_Answer.Text = "";
             }

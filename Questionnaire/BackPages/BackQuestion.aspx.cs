@@ -211,7 +211,7 @@ namespace Questionnaire.BackPages
                         textID = $"ID={questionnairesID}&";
 
                     Literal_QuestionTable.Text += $"<tr>" +
-                        $"<td><input type=\"checkbox\" name=\"checkBox_Delete\" value = \"{_i}\" /></td>" +
+                        $"<td><input type=\"checkbox\" name=\"checkBox_Delete\" value = \"{item.QuestionID}\" /></td>" +
                         $"<td>{_i + 1}</td>" +
                         $"<td>{item.QuestionContent}</td>" +
                         $"<td>{type}</td>" +
@@ -389,26 +389,47 @@ namespace Questionnaire.BackPages
 
         protected void Button_Delete_Click(object sender, EventArgs e)
         {
-            string[] poshion;
+            //string[] poshion;
+            //if (!string.IsNullOrEmpty(Request.Form["checkBox_Delete"]))
+            //{
+            //poshion = Request.Form["checkBox_Delete"].Split(',');
+            ////反轉排序，從後面開始刪，才不會遇到排序變動導致刪錯的問題
+            //Array.Reverse(poshion);
+
+            //try
+            //{
+            //foreach (var item in poshion)
+            //{
+            //questionList.RemoveAt(Convert.ToInt32(item));
+            //}
+            //}
+            //catch (Exception ex)
+            //{
+            //if (ex.Message == "索引超出範圍。必須為非負數且小於集合的大小。\r\n參數名稱: index") { }
+            //else { throw; }
+            //}
+            //}
+            List<int> poshion = new List<int>();
             if (!string.IsNullOrEmpty(Request.Form["checkBox_Delete"]))
             {
-                poshion = Request.Form["checkBox_Delete"].Split(',');
-                //反轉排序，從後面開始刪，才不會遇到排序變動導致刪錯的問題
-                Array.Reverse(poshion);
-
-                try
+                string[] itemArray = Request.Form["checkBox_Delete"].Split(',');
+                int i = 0;
+                foreach (var item in questionList)
                 {
-                    foreach (var item in poshion)
+                    if (Array.IndexOf(itemArray, item.QuestionID.ToString()) != -1)
                     {
-                        questionList.RemoveAt(Convert.ToInt32(item));
+                        poshion.Add(i);
                     }
+                    i++;
                 }
-                catch (Exception ex)
+
+                foreach (var item in poshion)
                 {
-                    if (ex.Message == "索引超出範圍。必須為非負數且小於集合的大小。\r\n參數名稱: index") { }
-                    else { throw; }
+                    questionList.RemoveAt(item);
                 }
             }
+
+
             HttpContext.Current.Session["questionList"] = questionList;
             GetTable(questionList);
         }

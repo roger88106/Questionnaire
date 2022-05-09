@@ -36,15 +36,22 @@ namespace Questionnaire.Managers
 
         public void DeleteCommonly(List<int> IDs)
         {
-            using (ContextModel contextModel = new ContextModel())
+            try
             {
-                foreach (var ID in IDs)
+                using (ContextModel contextModel = new ContextModel())
                 {
-                    var item = contextModel.CommonlyQuestions.First(c => c.CommonlyID == ID);
-                    contextModel.CommonlyQuestions.Remove(item);
+                    foreach (var ID in IDs)
+                    {
+                        var item = contextModel.CommonlyQuestions.First(c => c.CommonlyID == ID);
+                        contextModel.CommonlyQuestions.Remove(item);
+                    }
+                    contextModel.SaveChanges();
                 }
-                contextModel.SaveChanges();
             }
+            catch (Exception)
+            {
+            }
+
         }
         public void InsertCommonly(CommonlyQuestionModel commonly)
         {
@@ -64,10 +71,10 @@ namespace Questionnaire.Managers
                 //取得最大的ID
                 foreach (var item in query.ToList())
                 {
-                    ID = item.CommonlyID+1;
+                    ID = item.CommonlyID + 1;
                     break;
                 }
-                
+
                 var commonlyQuestion = new CommonlyQuestion()
                 {
                     CommonlyID = ID,
