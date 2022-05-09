@@ -113,8 +113,8 @@ namespace Questionnaire.BackPages
             if (questionnairesID == -1)
             {
 
-                if (string.IsNullOrEmpty(TextBox_QuestionnaireName.Text) ||
-                    string.IsNullOrEmpty(TextBox_Content.Text) ||
+                if (string.IsNullOrEmpty(TextBox_QuestionnaireName.Text.Trim()) ||
+                    string.IsNullOrEmpty(TextBox_Content.Text.Trim()) ||
                     string.IsNullOrEmpty(TextBox_Start.Text))
                 {//有漏寫的(end可以不寫)
                     Label1.Text = "問卷資料請確實填寫";
@@ -156,8 +156,8 @@ namespace Questionnaire.BackPages
             else
             {
 
-                if (string.IsNullOrEmpty(TextBox_QuestionnaireName.Text) ||
-                    string.IsNullOrEmpty(TextBox_Content.Text) ||
+                if (string.IsNullOrEmpty(TextBox_QuestionnaireName.Text.Trim()) ||
+                    string.IsNullOrEmpty(TextBox_Content.Text.Trim()) ||
                     string.IsNullOrEmpty(TextBox_Start.Text))
                 {//有漏寫的(end可以不寫)
                     Label1.Text = "問卷資料請確實填寫";

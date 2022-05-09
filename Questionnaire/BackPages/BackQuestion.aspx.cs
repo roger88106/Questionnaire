@@ -394,10 +394,25 @@ namespace Questionnaire.BackPages
                 //反轉排序，從後面開始刪，才不會遇到排序變動導致刪錯的問題
                 Array.Reverse(poshion);
 
-                foreach (var item in poshion)
+                try
                 {
-                    questionList.RemoveAt(Convert.ToInt32(item));
+                    foreach (var item in poshion)
+                    {
+                        questionList.RemoveAt(Convert.ToInt32(item));
+                    }
                 }
+                catch (Exception ex)
+                {
+                    if (ex.Message == "索引超出範圍。必須為非負數且小於集合的大小。\r\n參數名稱: index")
+                    {
+
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
             }
             HttpContext.Current.Session["questionList"] = questionList;
             GetTable(questionList);

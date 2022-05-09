@@ -32,6 +32,8 @@ namespace Questionnaire.FrontPages
                 answersList = (List<AnswerModel>)HttpContext.Current.Session["Questions_AnswerList"];
 
                 //如果Session內的ID跟QueryString的ID對不上，就防呆，跳過所有內容
+                if (respondent == null)
+                    throw new Exception("ID錯誤");
                 if (questionnairesID != respondent.QuestionnairesID)
                     throw new Exception("ID錯誤");
 
