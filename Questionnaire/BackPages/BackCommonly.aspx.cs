@@ -99,6 +99,7 @@ namespace Questionnaire.BackPages
                 //恢復預設
                 TextBox_Answer.Text = "";
                 TextBox_Question.Text = "";
+                Label1.Text = "";
                 DropDownList_Type.SelectedIndex = 0;
                 TextBox_Answer.Enabled = false;
             }
