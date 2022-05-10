@@ -422,7 +422,7 @@ namespace Questionnaire.BackPages
                     }
                     i++;
                 }
-
+                poshion.Reverse();
                 foreach (var item in poshion)
                 {
                     questionList.RemoveAt(item);

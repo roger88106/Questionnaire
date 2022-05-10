@@ -55,16 +55,16 @@
             <table>
                 <tr>
                     <td>
-                        <input type="button" onclick="javascript:window.history.go(-1);" value="取消" />
+                        <%--<input type="button" onclick="javascript:window.history.go(-1);" value="取消" />--%>
+
+                        <asp:Button Text="取消" runat="server" ID="Button_Cancel" OnClick="Button_Cancel_Click" />
                     </td>
                     <td>
                         <asp:Button Text="確認" runat="server" ID="Button_OK" OnClick="Button_OK_Click" />
                     </td>
                 </tr>
             </table>
-
             <asp:Label Text="" runat="server" ID="Label1" />
-
         </div>
     </form>
 </body>
