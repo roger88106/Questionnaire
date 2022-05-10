@@ -82,8 +82,25 @@ namespace Questionnaire.FrontPages
             {
                 Literal_Question.Text = "讀取錯誤，請重新填寫問卷";
                 Button_OK.Enabled = false;
+                
             }
         }
+
+        protected void Button_Cancel_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(Request.QueryString["ID"]))
+            {
+                Response.Redirect("FrontIndex.aspx");
+            }
+            else
+            {
+                HttpContext.Current.Session["FromCheck"] = true;
+
+                Response.Redirect($"Questionnaire.aspx?ID={Request.QueryString["ID"]}");
+            }
+        }
+
+
         protected void Button_OK_Click(object sender, EventArgs e)
         {
             if (Button_OK.Enabled == true)

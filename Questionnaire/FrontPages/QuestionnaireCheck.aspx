@@ -56,7 +56,9 @@
             <asp:Literal ID="Literal_Question" runat="server"></asp:Literal>
         </div>
         <div>
-            <input type="button" onclick="javascript:window.history.go(-1);"value="取消" />
+            <%--<input type="button" onclick="javascript:window.history.go(-1);"value="取消" />--%>
+            <asp:Button ID="Button_Cancel" runat="server" Text="取消" OnClick="Button_Cancel_Click"/>
+
             <asp:Button ID="Button_OK" runat="server" Text="確認" OnClick="Button_OK_Click"/>
         </div>
         <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
