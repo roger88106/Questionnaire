@@ -34,7 +34,12 @@ namespace Questionnaire.Managers
             }
         }
 
-        public void DeleteCommonly(List<int> IDs)
+        /// <summary>
+        /// 刪除常用問題
+        /// </summary>
+        /// <param name="IDs">常用問題ID的List</param>
+        /// <returns>是否刪除成功</returns>
+        public bool DeleteCommonly(List<int> IDs)
         {
             try
             {
@@ -46,10 +51,12 @@ namespace Questionnaire.Managers
                         contextModel.CommonlyQuestions.Remove(item);
                     }
                     contextModel.SaveChanges();
+                    return true;
                 }
             }
             catch (Exception)
             {
+                return false;
             }
 
         }

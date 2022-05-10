@@ -64,6 +64,7 @@ namespace Questionnaire.BackPages
             //        IDs.Add(questionList[Convert.ToInt32(item)].CommonlyID);
             //    }
             //}
+
             if (!string.IsNullOrEmpty(Request.Form["checkBox_Delete"]))
             {
                 string[] delete = Request.Form["checkBox_Delete"].Split(',');
@@ -75,7 +76,10 @@ namespace Questionnaire.BackPages
 
             if (IDs.Count() > 0)
             {
-                _mgr.DeleteCommonly(IDs);
+                if (!_mgr.DeleteCommonly(IDs))
+                    Label1.Text = "資料異動，請再次選擇希望刪除的項目";
+                else
+                    Label1.Text = "";
             }
             questionList = _mgr.GetCommonlyList();
             GetTable();
