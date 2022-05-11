@@ -33,16 +33,13 @@ namespace Questionnaire.FrontPages
 
             if (questionnairesID >= 0 && hasThisQuestionnairesID)
             {
-                bool fromCheck;
+                bool fromCheck= false;
                 try
                 {
-                    if (IsPostBack)
+                    if (!IsPostBack)
                     {
-                        fromCheck = false;
-                    }
-                    else
-                    {
-                        fromCheck = (bool)HttpContext.Current.Session["FromCheck"];
+                        if (HttpContext.Current.Session["FromCheck"] != null)
+                            fromCheck = (bool)HttpContext.Current.Session["FromCheck"];
                     }
                 }
                 catch (Exception)
